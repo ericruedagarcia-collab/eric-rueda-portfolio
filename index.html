@@ -139,7 +139,7 @@ body:not(.xray) #xui *{pointer-events:none!important;}
 #xcard::-webkit-scrollbar{width:6px;}#xcard::-webkit-scrollbar-thumb{background:#9cc8ff40;border-radius:6px;}
 #xcard .x{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:1px solid #9cc8ff40;background:none;color:#dcecff;font-size:17px;cursor:pointer;}
 @media (orientation:portrait) and (max-width:700px){
-  #xBtn{font-size:9px;padding:6px 7px 6px 12px;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);}
+  #xBtn{font-size:9px;padding:6px 7px 6px 12px;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 78px);}
   #xcard{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 12px);right:12px;left:12px;width:auto;max-height:46vh;max-height:46dvh;transform:translate(0,24px);}
   #xcard.open{transform:none;}
   #xui .meta b{font-size:28px;} #xui .help,#xui .mark{display:none;}
@@ -252,12 +252,12 @@ body.xray #tags .tag{pointer-events:none;}
 /* Portrait phones */
 #rotate{display:none;}
 @media (orientation:portrait) and (max-width:700px){
-  #rotate{display:block;position:fixed;z-index:5;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 120px);
+  #rotate{display:none;position:fixed;z-index:5;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 120px);
     font:500 10px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:#fff;border-radius:99px;padding:8px 14px;white-space:nowrap;pointer-events:none;}
-  #hint{display:none;}
-  .tag{font-size:18px;}
+  #hint{display:none;} #id p{display:none;} #id h1{font-size:19px;} .tag{font-size:14px;padding:2px 5px;} #contactChip{padding:9px 12px;font-size:10px;} #editBtn{right:calc(max(20px, calc(env(safe-area-inset-right,0px) + 2.6vw)) + 98px);padding:9px 11px;font-size:10px;}
 }
 @media (max-height:460px){ #hint,#id p{display:none;} .tag{font-size:17px;padding:2px 5px;} #id h1{font-size:18px;} #contactChip{padding:8px 12px;font-size:10px;} }
+@media (max-width:900px),(max-height:460px){ body.panelopen #soundBtn,body.panelopen #fsBtn,body.panelopen #editBtn,body.panelopen #contactChip{opacity:0;pointer-events:none;} }
 /* Intro curtain */
 #intro{position:fixed;inset:0;z-index:40;background:var(--studio);display:grid;place-items:center;transition:transform .9s cubic-bezier(.76,0,.24,1);will-change:transform;}
 #intro.out{transform:translate3d(0,-101%,0);}
@@ -271,6 +271,7 @@ body.xray #tags .tag{pointer-events:none;}
   opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s;pointer-events:none;}
 #enter.ready{opacity:1;transform:none;pointer-events:auto;}
 #enter:focus-visible{outline:2px solid var(--accent);outline-offset:4px;}
+#intro .ios{display:none;max-width:260px;text-align:center;font:500 10px/1.5 var(--f-mono);letter-spacing:.06em;color:var(--ink-soft);}
 #intro .snd{font:500 10px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);opacity:.8;}
 /* Drawer reveal: a circle that grows from the tapped object */
 #panel{transition:transform .42s cubic-bezier(.2,.9,.2,1),opacity .3s ease,visibility 0s .42s;transform:translate3d(48px,0,0);opacity:0;visibility:hidden;will-change:transform,opacity;contain:layout paint;}
@@ -369,7 +370,7 @@ body.editing #editBtn{background:var(--accent);border-color:var(--accent);color:
 <button id="editBtn" type="button" hidden>✎ Editar</button>
 <div id="edBar" hidden role="status"><span id="edMsg">Modo edición · abre un objeto para añadir contenido</span><button type="button" class="save" id="edSave" disabled>Guardar</button><button type="button" id="edExit">Salir</button></div>
 <input type="file" id="edFile" accept="image/*,video/mp4,video/webm" multiple hidden>
-<div id="intro"><div class="in"><h1>Eric Rueda</h1><div class="bar"><i id="introBar"></i></div><small id="introTxt">Montando el estudio…</small><button id="enter" type="button">Entrar ▸</button><span class="snd">Con sonido</span></div></div>
+<div id="intro"><div class="in"><h1>Eric Rueda</h1><div class="bar"><i id="introBar"></i></div><small id="introTxt">Montando el estudio…</small><button id="enter" type="button">Entrar ▸</button><span class="snd">Con sonido</span><span class="ios" id="iosHint">Para verla a pantalla completa: Compartir ▸ «Añadir a pantalla de inicio»</span></div></div>
 <div id="hint"><b>Toca un objeto</b> para ver mis trabajos · <b>arrástralo</b> para moverlo<br><b>Toca o estira a Eric</b>: es gelatina · <b>doble clic</b>: te saluda</div>
 <div id="rotate">Gira el móvil · se ve en horizontal</div>
 <div id="tags"></div>
@@ -390,7 +391,7 @@ body.editing #editBtn{background:var(--accent);border-color:var(--accent);color:
 /* ───────────────────────── Content ───────────────────────── */
 const M = "media/";
 const MOBILE = matchMedia("(pointer:coarse)").matches || Math.min(screen.width, screen.height) < 700;
-let VW = innerWidth, VH = innerHeight;
+let VW = innerWidth, VH = innerHeight, PB = 0, HV = 7;
 const range = (n, f) => Array.from({ length: n }, (_, i) => f(i + 1));
 const pad = n => String(n).padStart(2, "0");
 const COLLUP_CREA = ["«Ya te pagaré» no es una forma de pago", "«Es solo un vídeo»: eran 6 horas de trabajo", "Dejé de trabajar por visibilidad", "Si no está por escrito, no es un acuerdo", "El trato, sí", "La exposición no paga el alquiler", "Tu próxima colaboración empieza aquí", "Colaboraciones claras", "Dejé de perseguir pagos", "Grabar, editar y publicar también es trabajo"];
@@ -840,7 +841,7 @@ addEventListener("keydown", e => {
 const SFX = (() => {
   let muted = false, ready = false, unlocked = false;
   try { muted = localStorage.getItem("er-muted") === "1"; } catch (_) {}
-  const SR = 44100, URLS = {}, POOL = {};
+  const SR = 44100, URLS = {}, POOL = {}, BUF = {}; let ac = null, keep = null;
   function kit(ac, dest) {
     let NB = null;
     const noise = () => { if (!NB) { NB = ac.createBuffer(1, SR * 2, SR); const d = NB.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; } const n = ac.createBufferSource(); n.buffer = NB; n.loop = true; return n; };
@@ -883,7 +884,7 @@ const SFX = (() => {
       try {
         const ac = new OAC(1, Math.ceil(SR * dur), SR); fn(kit(ac, ac.destination));
         const buf = await new Promise((res, rej) => { const r = ac.startRendering(); if (r && r.then) r.then(res, rej); else ac.oncomplete = e => res(e.renderedBuffer); });
-        URLS[name] = wav(buf); POOL[name] = [0, 1, 2].map(() => { const a = new Audio(URLS[name]); a.preload = "auto"; return a; });
+        BUF[name] = buf; URLS[name] = wav(buf); POOL[name] = [0, 1, 2].map(() => { const a = new Audio(URLS[name]); a.preload = "auto"; return a; });
       } catch (_) {}
       await new Promise(r => setTimeout(r, 0));           // keep the page responsive while building
     }
@@ -894,10 +895,20 @@ const SFX = (() => {
   }
   function init() {
     try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (_) {}
+    try {
+      const AC0 = window.AudioContext || window.webkitAudioContext;
+      if (AC0 && !ac) { ac = new AC0({ latencyHint: "interactive" }); const b = ac.createBuffer(1, 1, 22050), s0 = ac.createBufferSource(); s0.buffer = b; s0.connect(ac.destination); s0.start(0); }
+      if (ac && ac.state !== "running") { const r = ac.resume(); if (r && r.catch) r.catch(() => {}); }
+      if (!keep && URLS.silence) { keep = new Audio(URLS.silence); keep.loop = true; keep.volume = .01; const r = keep.play(); if (r && r.catch) r.catch(() => {}); }   // keeps iOS in "playback" mode (ignores the silent switch)
+    } catch (_) {}
     if (unlocked) return; unlocked = true; if (ready) prime();
   }
   function play(name, delay = 0) {
-    if (muted || !POOL[name]) return;
+    if (muted) return;
+    if (ac && ac.state === "running" && BUF[name]) {
+      try { const src = ac.createBufferSource(), g = ac.createGain(); src.buffer = BUF[name]; g.gain.value = .9; src.connect(g); g.connect(ac.destination); src.start(ac.currentTime + Math.max(0, delay)); return; } catch (_) {}
+    }
+    if (!POOL[name]) return;
     const go = () => { const list = POOL[name]; const a = list.find(x => (x.paused || x.ended) && !x._prime) || list.find(x => x._prime) || list[0]; a._prime = false; try { a.currentTime = 0; } catch (_) {} a.muted = false; a.volume = 1; const p = a.play(); if (p && p.catch) p.catch(() => {}); };
     if (delay > 0) setTimeout(go, delay * 1000); else go();
   }
@@ -914,7 +925,8 @@ const soundBtn = document.getElementById("soundBtn");
 function paintSound() { const m = SFX.muted; soundBtn.setAttribute("aria-pressed", m ? "true" : "false"); soundBtn.setAttribute("aria-label", m ? "Activar sonido" : "Silenciar sonido");
   soundBtn.querySelector(".w").style.display = m ? "none" : ""; soundBtn.querySelector(".x").style.display = m ? "" : "none"; }
 // any first touch also unlocks audio
-for (const ev of ["pointerdown", "keydown", "touchend"]) addEventListener(ev, () => SFX.init(), { capture: true, passive: true });
+for (const ev of ["pointerdown", "keydown", "touchend", "click"]) addEventListener(ev, () => SFX.init(), { capture: true, passive: true });
+document.addEventListener("visibilitychange", () => { if (!document.hidden) SFX.init(); });
 soundBtn.addEventListener("click", () => { SFX.init(); SFX.setMuted(!SFX.muted); paintSound(); if (!SFX.muted) SFX.click(); });
 paintSound();
 (function () {
@@ -1677,12 +1689,24 @@ canvas.addEventListener("dblclick", e => { if (XR.on || !landed) return; const h
 canvas.addEventListener("pointerleave", () => { hovered = null; });
 
 /* ───────────────────────── Layout + loop ───────────────────────── */
+const SLOT_ORDER = [[8, 9], [0, 4], [1, 5], [3, 6], [2, 7]];   // portrait: two columns of five (left idx, right idx), top to bottom
+const SLOT_F = [.6, .35, .1, -.15, -.4];
+function layoutSlots() {
+  if (!items.length) return;
+  SLOT_ORDER.forEach(([l, r], row) => {
+    const y = 3.5 + HV * SLOT_F[row];
+    if (items[l]) items[l].userData.slot = [-3.45, y]; if (items[r]) items[r].userData.slot = [3.45, y];
+  });
+}
 function resize(force) {
   const r = canvas.getBoundingClientRect(), w = Math.max(1, Math.round(r.width || innerWidth)), h = Math.max(1, Math.round(r.height || innerHeight));
   if (force !== true && w === VW && h === VH && resize.done) return;
   resize.done = true; VW = w; VH = h; renderer.setSize(w, h, false); camera.aspect = w / h;
   const tan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-  camera.userData.D = Math.max((camera.aspect < 1 ? 4.6 : 7.6) / (tan * camera.aspect), 3.7 / tan);
+  PB = camera.aspect < .85 ? 1 : 0;
+  const halfW = PB ? 4.3 : 7.6, halfH = h < 500 ? 4.7 : 3.7;
+  camera.userData.D = Math.max(halfW / (tan * camera.aspect), halfH / tan); HV = camera.userData.D * tan;
+  layoutSlots(); for (const it of items) it.userData.tagW = 0;
   camera.updateProjectionMatrix();
 }
 addEventListener("resize", () => resize());
@@ -1722,17 +1746,18 @@ function frame() {
     if (!u.landed) {
       steps(dtR, h => { u.vy -= 13 * h; u.dy += u.vy * h; if (u.dy <= 0) { u.dy = 0; if (u.vy < -1.2) { u.vy = -u.vy * .34; u.bounces = (u.bounces || 0) + 1; poke(it); if (u.bounces === 1) SFX.pop(.8 + (u.delay % .5)); } else { u.vy = 0; u.landed = true; } } });
     }
-    const pe = 1;
+    const pe = 1, sl = u.slot, bx = PB && sl ? sl[0] : u.base.x, by = PB && sl ? sl[1] : u.base.y;
     u.hover += (((hovered === it) || u.drag || (openId === u.id && u.page === openPage) ? 1 : 0) - u.hover) * .15;
     steps(dt, h => { u.sqv += (-140 * u.sq - 9 * u.sqv) * h; u.sq += u.sqv * h; });
     const sc = u.s * pe * (1 + u.hover * .1), q = THREE.MathUtils.clamp(u.sq * .06, -.25, .25);
     it.scale.set(sc * (1 - q * .6), sc * (1 + q), sc * (1 - q * .6));
     const bob = reduce || u.drag ? 0 : Math.sin(t * 1.1 + u.phase) * .13 * (u.landed ? 1 : 0);
-    if (!u.landed) it.position.set(u.base.x, u.base.y + u.dy, u.base.z);
-    else it.position.lerp(tmp.set(u.base.x, u.base.y + bob + u.hover * .12, u.base.z), u.drag ? .35 : .2);
+    if (!u.landed) it.position.set(bx, by + u.dy, u.base.z);
+    else it.position.lerp(tmp.set(bx, by + bob + u.hover * .12, u.base.z), u.drag ? .35 : .2);
     it.rotation.y = (reduce ? 0 : Math.sin(t * .5 + u.phase) * .3) + (u.drag ? (mouse.x * .3) : 0);
     it.rotation.z = reduce ? 0 : Math.sin(t * .7 + u.phase) * .05;
-    const [sx, sy] = toScreen(tmp.set(it.position.x, it.position.y + 1.02 * sc, it.position.z));
+    let [sx, sy] = toScreen(tmp.set(it.position.x, it.position.y + 1.02 * sc, it.position.z));
+    if (PB) { if (!u.tagW || resize.tagsStale) u.tagW = u.tag.offsetWidth || 90; sx = Math.max(u.tagW / 2 + 6, Math.min(VW - u.tagW / 2 - 6, sx)); }
     u.tag.style.transform = `translate(${sx.toFixed(1)}px, ${sy.toFixed(1)}px) translate(-50%, -100%)`;
     u.tag.style.opacity = u.landed ? 1 : 0;
     u.tag.classList.toggle("on", hovered === it);
@@ -1774,7 +1799,7 @@ async function start() {
   document.body.classList.add("intro");
   try { await Promise.race([Promise.all([document.fonts.load('900 100px "Unbounded"'), document.fonts.load('700 100px "Dancing Script"'), document.fonts.load('900 100px "Inter Tight"')]), new Promise(r => setTimeout(r, 2500))]); } catch (_) {}
   wallText();
-  resize(); build();
+  resize(); build(); layoutSlots();
   const seen = new Set();
   scene.traverse(o => { if (!o.isMesh) return; const m = o.material; if (seen.has(m)) return; seen.add(m); if (m.map) return; if (m.color) m.color.convertSRGBToLinear(); if (m.sheen && m.sheen.isColor) m.sheen.convertSRGBToLinear(); });
   scene.updateMatrixWorld(true); frame(); await loadEric();
@@ -1783,9 +1808,11 @@ async function start() {
   introProgress(1);
   const enter = document.getElementById("enter"), intro = document.getElementById("intro");
   document.getElementById("introTxt").textContent = "Todo listo";
+  try { if (MOBILE && /iPhone|iPad|iPod/.test(navigator.userAgent) && !navigator.standalone && !document.documentElement.requestFullscreen) document.getElementById("iosHint").style.display = "block"; } catch (_) {}
   enter.classList.add("ready"); enter.focus({ preventScroll: true });
   enter.addEventListener("click", () => {
     SFX.init(); SFX.click();
+    if (MOBILE) { try { const de = document.documentElement, rq = de.requestFullscreen || de.webkitRequestFullscreen; if (rq && !document.fullscreenElement && !document.webkitFullscreenElement) { const r = rq.call(de, { navigationUI: "hide" }); if (r && r.catch) r.catch(() => {}); } } catch (_) {} }
     intro.classList.add("out"); setTimeout(() => intro.remove(), 1300);
     const now = performance.now() / 1000 - t0;
     if (reduce) { WALL.t0 = now - 5; DROP.t0 = now - 20; riseT = now - 5; document.body.classList.remove("intro"); return; }
