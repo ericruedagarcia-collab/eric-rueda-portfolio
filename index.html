@@ -258,6 +258,15 @@ body.xray #tags .tag{pointer-events:none;}
 }
 @media (max-height:460px){ #hint,#id p{display:none;} .tag{font-size:17px;padding:2px 5px;} #id h1{font-size:18px;} #contactChip{padding:8px 12px;font-size:10px;} }
 @media (max-width:900px),(max-height:460px){ body.panelopen #soundBtn,body.panelopen #fsBtn,body.panelopen #editBtn,body.panelopen #contactChip{opacity:0;pointer-events:none;} }
+@media (max-width:700px),(max-height:460px){
+  #xui .meta{display:none;}
+  body.xray #xBtn{top:calc(env(safe-area-inset-top,0px) + 14px);bottom:auto;left:auto;right:12px;transform:none;}
+  #xBtn{font-size:8px;letter-spacing:.08em;gap:7px;padding:5px 6px 5px 10px;}
+  #xBtn .track{width:34px;height:18px;} #xBtn .knob{top:3px;left:3px;width:12px;height:12px;}
+  #xBtn[aria-checked="true"] .knob{transform:translateX(16px);}
+  #soundBtn,#fsBtn{width:34px;height:34px;} #fsBtn{left:calc(max(20px, calc(env(safe-area-inset-left,0px) + 2.6vw)) + 42px);} #soundBtn svg,#fsBtn svg{width:15px;height:15px;}
+  .tag{font-size:12.5px;padding:1px 4px;} #id h1{font-size:16px;} #contactChip,#editBtn{font-size:9px;padding:8px 11px;}
+}
 /* Intro curtain */
 #intro{position:fixed;inset:0;z-index:40;background:var(--studio);display:grid;place-items:center;transition:transform .9s cubic-bezier(.76,0,.24,1);will-change:transform;}
 #intro.out{transform:translate3d(0,-101%,0);}
@@ -360,7 +369,7 @@ body.editing #editBtn{background:var(--accent);border-color:var(--accent);color:
 <div id="flash"></div>
 <div id="xui" aria-hidden="true">
   <div class="film"></div>
-  <div class="meta"><b>Habilidades intrapersonales</b>RX · Eric Rueda García · 19 años<br>Toca un órgano para ver sus aptitudes</div>
+  <div class="meta"><b>Habilidades intrapersonales</b>Toca un órgano para ver sus aptitudes</div>
   <div id="xLabels"></div>
   <div class="help">Cerebro · Corazón · Olfato · Voz</div>
   <div class="mark">L</div>
