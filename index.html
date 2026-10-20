@@ -501,6 +501,12 @@ const DATA = {
         lead: "Spots verticales para redes: guion, generación de planos con IA, montaje, textos y ritmo.",
         items: [{ src: M + "cristalimp-video-realista.mp4", cap: "Cristalimp · spot realista", sub: "Planos con IA (Higgsfield) y montaje con textos y oferta" },
           { src: M + "cristalimp-anuncio-video.mp4", cap: "Cristalimp · anuncio 12 s", sub: "Formato story para Meta Ads" }] },
+      { name: "Edición y color", type: "video",
+        lead: "Edición de vídeo y colour grading para creadora de contenido, más una pieza grabada y editada por mí en Nueva York.",
+        items: [{ src: M + "sara-1.mp4", poster: M + "sara-1.jpg", cap: "Sara Morales · edición y colour grading", sub: "Corte al ritmo, subtítulos animados y color" },
+          { src: M + "sara-2.mp4", poster: M + "sara-2.jpg", cap: "Sara Morales · edición y colour grading", sub: "Formato vertical para Reels" },
+          { src: M + "sara-3.mp4", poster: M + "sara-3.jpg", cap: "Sara Morales · edición y colour grading", sub: "Textos en pantalla y gradación de color" },
+          { src: M + "nyc-1.mp4", poster: M + "nyc-1.jpg", cap: "NY world cup walk · grabado y editado por mí", sub: "Nueva York · imagen, montaje y color propios" }] },
       { name: "Herramientas", type: "text",
         lead: "Filmmaking semiprofesional y edición de vídeo corto pensada para retener.",
         list: ["CapCut a nivel experto: cortes al ritmo, diseño sonoro, subtítulos y hooks para TikTok, Reels y Shorts.",
@@ -593,7 +599,7 @@ function pageHtml(p) {
     galItems = p.items;
     return `${p.lead ? `<p class="p-lead">${esc(p.lead)}</p>` : ""}<div class="gal ${p.items.length <= 4 && !p.items[0].logo ? "wide" : ""}">${p.items.map((it, i) => `<figure class="${it.logo ? "logo-tile" : ""}"><button type="button" data-gi="${i}"><img src="${it.src}" alt="${esc(it.cap)}" loading="lazy" decoding="async"></button><figcaption><b>${esc(it.cap)}</b>${esc(it.sub || "")}</figcaption></figure>`).join("")}</div>${linksHtml(p.links)}`;
   }
-  if (p.type === "video") return `<p class="p-lead">${esc(p.lead)}</p><div class="vids">${p.items.map(v => `<figure><video src="${v.src}" controls playsinline preload="metadata" muted loop></video><figcaption><b>${esc(v.cap)}</b>${esc(v.sub)}</figcaption></figure>`).join("")}</div>`;
+  if (p.type === "video") return `<p class="p-lead">${esc(p.lead)}</p><div class="vids">${p.items.map(v => `<figure><video src="${v.src}"${v.poster ? ` poster="${v.poster}"` : ""} controls playsinline preload="metadata" muted loop></video><figcaption><b>${esc(v.cap)}</b>${esc(v.sub)}</figcaption></figure>`).join("")}</div>`;
   if (p.type === "web") return webHtml(p.web);
   if (p.type === "webindex") return `<p class="p-lead">Diseño y programo webs para negocios: interactivas, rápidas y pensadas para que el cliente reserve o pida. Elige una para verla funcionando.</p>
     <div class="gal wide">${WEBS.map((w, i) => `<figure><button type="button" data-goto="${i + 1}" style="cursor:pointer"><img src="${w.shot}" alt="${esc(w.name)}" loading="lazy" decoding="async"></button><figcaption><b>${esc(w.name)}</b>${esc(w.type)}</figcaption></figure>`).join("")}</div>`;
