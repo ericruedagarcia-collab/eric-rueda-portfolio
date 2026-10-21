@@ -211,9 +211,11 @@ body.xray #tags .tag{pointer-events:none;}
 .gal .logo-tile img{width:72%;height:72%;object-fit:contain;}
 .gal figcaption{font-size:12.5px;line-height:1.35;margin-top:7px;color:var(--ink-soft);}
 .gal figcaption b{display:block;color:var(--ink);font-weight:600;font-size:13px;}
-.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px;align-items:start;}
+.vids figure.wide{grid-column:1/-1;}
 .vids figure{margin:0;min-width:0;}
-.vids video{width:100%;border-radius:12px;background:#000;display:block;max-height:70vh;max-height:70dvh;}
+.vids video{width:100%;aspect-ratio:9/16;object-fit:contain;border-radius:12px;background:#0d0d0f;display:block;}
+.vids figure.wide video{aspect-ratio:16/9;}
 .vids figcaption{font-size:12.5px;line-height:1.35;margin-top:7px;color:var(--ink-soft);}
 .vids figcaption b{display:block;color:var(--ink);font-weight:600;font-size:13px;}
 .webcard .shot{display:block;width:100%;border:0;padding:0;border-radius:14px;overflow:hidden;cursor:pointer;background:#ddd;box-shadow:0 18px 40px -22px #16161a80;position:relative;}
@@ -506,7 +508,7 @@ const DATA = {
         items: [{ src: M + "sara-1.mp4", poster: M + "sara-1.jpg", cap: "Sara Morales · edición y colour grading", sub: "Corte al ritmo, subtítulos animados y color" },
           { src: M + "sara-2.mp4", poster: M + "sara-2.jpg", cap: "Sara Morales · edición y colour grading", sub: "Formato vertical para Reels" },
           { src: M + "sara-3.mp4", poster: M + "sara-3.jpg", cap: "Sara Morales · edición y colour grading", sub: "Textos en pantalla y gradación de color" },
-          { src: M + "nyc-1.mp4", poster: M + "nyc-1.jpg", cap: "NY world cup walk · grabado y editado por mí", sub: "Nueva York · imagen, montaje y color propios" }] },
+          { src: M + "nyc-1.mp4", poster: M + "nyc-1.jpg", wide: 1, cap: "NY world cup walk · grabado y editado por mí", sub: "Nueva York · imagen, montaje y color propios" }] },
       { name: "Herramientas", type: "text",
         lead: "Filmmaking semiprofesional y edición de vídeo corto pensada para retener.",
         list: ["CapCut a nivel experto: cortes al ritmo, diseño sonoro, subtítulos y hooks para TikTok, Reels y Shorts.",
@@ -599,7 +601,7 @@ function pageHtml(p) {
     galItems = p.items;
     return `${p.lead ? `<p class="p-lead">${esc(p.lead)}</p>` : ""}<div class="gal ${p.items.length <= 4 && !p.items[0].logo ? "wide" : ""}">${p.items.map((it, i) => `<figure class="${it.logo ? "logo-tile" : ""}"><button type="button" data-gi="${i}"><img src="${it.src}" alt="${esc(it.cap)}" loading="lazy" decoding="async"></button><figcaption><b>${esc(it.cap)}</b>${esc(it.sub || "")}</figcaption></figure>`).join("")}</div>${linksHtml(p.links)}`;
   }
-  if (p.type === "video") return `<p class="p-lead">${esc(p.lead)}</p><div class="vids">${p.items.map(v => `<figure><video src="${v.src}"${v.poster ? ` poster="${v.poster}"` : ""} controls playsinline preload="metadata" muted loop></video><figcaption><b>${esc(v.cap)}</b>${esc(v.sub)}</figcaption></figure>`).join("")}</div>`;
+  if (p.type === "video") return `<p class="p-lead">${esc(p.lead)}</p><div class="vids">${p.items.map(v => `<figure${v.wide ? ' class="wide"' : ""}><video src="${v.src}"${v.poster ? ` poster="${v.poster}"` : ""} controls playsinline preload="metadata" muted loop></video><figcaption><b>${esc(v.cap)}</b>${esc(v.sub)}</figcaption></figure>`).join("")}</div>`;
   if (p.type === "web") return webHtml(p.web);
   if (p.type === "webindex") return `<p class="p-lead">Diseño y programo webs para negocios: interactivas, rápidas y pensadas para que el cliente reserve o pida. Elige una para verla funcionando.</p>
     <div class="gal wide">${WEBS.map((w, i) => `<figure><button type="button" data-goto="${i + 1}" style="cursor:pointer"><img src="${w.shot}" alt="${esc(w.name)}" loading="lazy" decoding="async"></button><figcaption><b>${esc(w.name)}</b>${esc(w.type)}</figcaption></figure>`).join("")}</div>`;
@@ -714,11 +716,45 @@ function setEdit(on) {
   editBtn.textContent = on ? "✓ Editando" : "✎ Editar";
   if (openId) { pHead.innerHTML = headHtml(DATA[openId]); renderPage(); }
 }
-editBtn.addEventListener("click", () => setEdit(!EDIT));
+let EDITKEY = ""; try { EDITKEY = sessionStorage.getItem("er-key") || ""; } catch (_) {}
+async function askKey() {
+  const k = (window.prompt("Clave de edición") || "").trim(); if (!k) return false;
+  try {
+    const r = await fetch("api/content", { method: "POST", headers: { "content-type": "application/json", "x-edit-key": k }, body: JSON.stringify({ check: true }) });
+    if (r.status === 401) { alertMsg("Clave incorrecta"); return false; }
+    if (!r.ok) { alertMsg("La edición desde la web no está disponible aquí"); return false; }
+  } catch (_) { alertMsg("No se pudo comprobar la clave. Revisa la conexión"); return false; }
+  EDITKEY = k; try { sessionStorage.setItem("er-key", k); } catch (_) {} return true;
+}
+async function webSave() {
+  edSave.disabled = true; edMsg.textContent = "Guardando…";
+  try {
+    CONTENT.updated = new Date().toISOString();
+    const r = await fetch("api/content", { method: "POST", headers: { "content-type": "application/json", "x-edit-key": EDITKEY }, body: JSON.stringify(CONTENT) });
+    if (r.status === 401) { EDITKEY = ""; try { sessionStorage.removeItem("er-key"); } catch (_) {} edMsg.textContent = "Clave incorrecta: vuelve a entrar en Editar"; edSave.disabled = false; return; }
+    if (!r.ok) throw new Error(r.status);
+    dirty = false; edMsg.textContent = "Guardado ✓ · ya lo ve todo el mundo";
+    try { sessionStorage.removeItem(DRAFT_KEY); } catch (_) {}
+  } catch (_) { edMsg.textContent = "No se pudo guardar. Prueba otra vez"; edSave.disabled = false; }
+}
+async function webUpload(f, list) {
+  const { upload } = await import("./vendor/blob-client.js");
+  const name = "media/" + Date.now() + "-" + f.name.replace(/[^\w.\-]+/g, "_");
+  const blob = await upload(name, f, { access: "public", handleUploadUrl: "/api/upload", clientPayload: EDITKEY, multipart: f.size > 50e6,
+    contentType: f.type || undefined, onUploadProgress: p => { edMsg.textContent = `Subiendo ${f.name}: ${Math.round(p.percentage)}%`; } });
+  list.push({ type: /^video\//.test(f.type) ? "video" : "image", url: blob.url, caption: "" });
+  markDirty(`Subido ${f.name} · pulsa Guardar`); renderPage();
+}
+editBtn.addEventListener("click", async () => {
+  if (EDIT) return setEdit(false);
+  if (!ART && !EDITKEY && !(await askKey())) return;
+  setEdit(true);
+});
 document.getElementById("edExit").addEventListener("click", () => setEdit(false));
 addEventListener("beforeunload", e => { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
 edSave.addEventListener("click", async () => {
   if (!dirty) return;
+  if (!ART && EDITKEY) return webSave();
   if (!ART) { edMsg.textContent = "Para guardar, abre el portfolio desde tu cuenta de Claude (como propietario)"; return; }
   edSave.disabled = true; edMsg.textContent = "Guardando…";
   try {
@@ -774,7 +810,7 @@ function editClick(e) {
     else if (k === "link") showForm("link", { mode: "add", type: "link" });
     else if (k === "page") showForm("page", { mode: "page" });
     else if (k === "rename") showForm("page", { mode: "rename" }, { name: allPages(openId)[openPage].name });
-    else if (k === "media") { if (!ASSETS) alertMsg("Subir archivos solo funciona abriendo la página como propietario"); else edFile.click(); }
+    else if (k === "media") { if (!ASSETS && !EDITKEY) alertMsg("Subir archivos solo funciona con la clave de edición"); else edFile.click(); }
     else if (k === "delpage") {
       const c = secC(openId), i = openPage - DATA[openId].pages.length, pg = c.pages[i];
       if (pg && confirmDelete(ed, "¿Borrar la página entera?")) { (pg.blocks || []).forEach(b => b.asset && pendingDeletes.push(b.asset)); c.pages.splice(i, 1); openPage = 0; pHead.innerHTML = headHtml(DATA[openId]); markDirty(); renderPage(); }
@@ -804,22 +840,25 @@ pBody.addEventListener("input", e => {
   markDirty();
 });
 edFile.addEventListener("change", async () => {
-  const files = [...edFile.files]; edFile.value = ""; if (!files.length || !ASSETS) return;
+  const files = [...edFile.files]; edFile.value = ""; if (!files.length || (!ASSETS && !EDITKEY)) return;
   const list = blocksFor(openId, openPage, true);
   for (let k = 0; k < files.length; k++) {
     const f = files[k]; edMsg.textContent = `Subiendo ${k + 1}/${files.length}: ${f.name}`;
     try {
+      if (!ASSETS) { await webUpload(f, list); continue; }
       const r = await ASSETS.upload(f);
       list.push({ type: /^video\//.test(r.contentType) ? "video" : "image", asset: r.id, caption: "" });
       markDirty(`Subido ${f.name} · recuerda Guardar`); renderPage();
     } catch (err) {
       const c = err && err.code;
-      alertMsg(c === "too_large" ? `${f.name} pesa más de 20 MB` : c === "unsupported_type" ? `${f.name}: formato no admitido (usa JPG, PNG, WEBP, GIF, MP4 o WEBM)` : c === "quota_or_state" ? "Sin espacio para más archivos" : `No se pudo subir ${f.name}`);
+      alertMsg(!ASSETS ? `No se pudo subir ${f.name}: ${(err && err.message) || "error"}` : c === "too_large" ? `${f.name} pesa más de 20 MB` : c === "unsupported_type" ? `${f.name}: formato no admitido (usa JPG, PNG, WEBP, GIF, MP4 o WEBM)` : c === "quota_or_state" ? "Sin espacio para más archivos" : `No se pudo subir ${f.name}`);
     }
   }
 });
 async function initContent() {
-  try { const r = await fetch("content.json", { cache: "no-store" }); if (r.ok) { const j = await r.json(); if (j && j.sections) CONTENT = j; } } catch (_) {}
+  let remote = false;
+  try { const r0 = await fetch("api/content", { cache: "no-store" }); if (r0.ok) { const j0 = await r0.json(); if (j0 && j0.sections) { CONTENT = j0; remote = true; } } } catch (_) {}
+  if (!remote) try { const r = await fetch("content.json", { cache: "no-store" }); if (r.ok) { const j = await r.json(); if (j && j.sections) CONTENT = j; } } catch (_) {}
   try { const d = sessionStorage.getItem(DRAFT_KEY); if (d) { CONTENT = JSON.parse(d); dirty = true; } } catch (_) {}
   if (openId) { pHead.innerHTML = headHtml(DATA[openId]); renderPage(); }
   editBtn.hidden = false;
