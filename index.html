@@ -381,7 +381,7 @@ body.editing #editBtn{background:var(--accent);border-color:var(--accent);color:
 </div>
 <button id="editBtn" type="button" hidden>✎ Editar</button>
 <div id="edBar" hidden role="status"><span id="edMsg">Modo edición · abre un objeto para añadir contenido</span><button type="button" class="save" id="edSave" disabled>Guardar</button><button type="button" id="edExit">Salir</button></div>
-<input type="file" id="edFile" accept="image/*,video/mp4,video/webm" multiple hidden>
+<input type="file" id="edFile" accept="image/*,video/*,.mov,.MOV,.mp4,.m4v,.webm" multiple hidden>
 <div id="intro"><div class="in"><h1>Eric Rueda</h1><div class="bar"><i id="introBar"></i></div><small id="introTxt">Montando el estudio…</small><button id="enter" type="button">Entrar ▸</button><span class="snd">Con sonido</span><span class="ios" id="iosHint">Para verla a pantalla completa: Compartir ▸ «Añadir a pantalla de inicio»</span></div></div>
 <div id="hint"><b>Toca un objeto</b> para ver mis trabajos · <b>arrástralo</b> para moverlo<br><b>Toca o estira a Eric</b>: es gelatina · <b>doble clic</b>: te saluda</div>
 <div id="rotate">Gira el móvil · se ve en horizontal</div>
@@ -856,7 +856,7 @@ edFile.addEventListener("change", async () => {
       markDirty(`Subido ${f.name} · recuerda Guardar`); renderPage();
     } catch (err) {
       const c = err && err.code;
-      alertMsg(!ASSETS ? `No se pudo subir ${f.name}: ${(err && err.message) || "error"}` : c === "too_large" ? `${f.name} pesa más de 20 MB` : c === "unsupported_type" ? `${f.name}: formato no admitido (usa JPG, PNG, WEBP, GIF, MP4 o WEBM)` : c === "quota_or_state" ? "Sin espacio para más archivos" : `No se pudo subir ${f.name}`);
+      alertMsg(!ASSETS ? `No se pudo subir ${f.name}: ${(err && err.message) || "error"}` : c === "too_large" ? `${f.name} pesa más de 20 MB` : c === "unsupported_type" ? `${f.name}: formato no admitido (usa JPG, PNG, WEBP, GIF, MP4, MOV o WEBM)` : c === "quota_or_state" ? "Sin espacio para más archivos" : `No se pudo subir ${f.name}`);
     }
   }
 });
