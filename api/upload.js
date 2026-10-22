@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
       onBeforeGenerateToken: async (pathname, clientPayload) => {
         if (!check(clientPayload)) throw new Error("Clave de edición incorrecta");
         return {
-          allowedContentTypes: ["video/mp4", "video/webm", "video/quicktime", "image/jpeg", "image/png", "image/webp", "image/gif"],
+          allowedContentTypes: ["video/*", "image/*", "application/octet-stream"],
           maximumSizeInBytes: 3 * 1024 * 1024 * 1024,
           addRandomSuffix: true,
         };
