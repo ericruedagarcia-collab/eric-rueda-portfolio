@@ -206,6 +206,7 @@ body.xray #tags .tag{pointer-events:none;}
 .gal.wide{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}
 .gal figure{margin:0;min-width:0;}
 .gal button{display:block;width:100%;padding:0;border:0;background:#e9e8e4;border-radius:12px;overflow:hidden;cursor:zoom-in;box-shadow:0 10px 24px -16px #16161a66;}
+.gal figure>a{background:#e9e8e4;border-radius:12px;overflow:hidden;box-shadow:0 10px 24px -16px #16161a66;}
 .gal img{display:block;width:100%;height:auto;}
 .gal .logo-tile button{background:#fff;border:1px solid var(--line);aspect-ratio:1;display:grid;place-items:center;}
 .gal .logo-tile img{width:72%;height:72%;object-fit:contain;}
@@ -408,6 +409,8 @@ const pad = n => String(n).padStart(2, "0");
 const COLLUP_CREA = ["«Ya te pagaré» no es una forma de pago", "«Es solo un vídeo»: eran 6 horas de trabajo", "Dejé de trabajar por visibilidad", "Si no está por escrito, no es un acuerdo", "El trato, sí", "La exposición no paga el alquiler", "Tu próxima colaboración empieza aquí", "Colaboraciones claras", "Dejé de perseguir pagos", "Grabar, editar y publicar también es trabajo"];
 const COLLUP_NEG = ["Un creador prometió un reel y tres stories", "Hoy colaboro con otros", "Un acuerdo claro", "Creadores que entiendan tu tienda", "Tu plato estrella merece al creador adecuado", "¿Cuánto cuesta una colaboración sin reglas?", "Regalar una cena no es un acuerdo", "Antes de colaborar, deja claras las reglas", "Deja de buscar creadores por mensaje directo", "Tu próxima colaboración empieza aquí"];
 const carCrea = range(10, i => ({ src: `${M}collup-creadores-${pad(i)}.jpg`, cap: COLLUP_CREA[i - 1], sub: "Serie para creadores" }));
+const COLLUP_EXP = ["¿Qué es CollUp?", "Tinder para influencers y negocios", "Paso 1: crea tu perfil", "Paso 2: haz match", "Paso 3: habla y cierra", "Paso 4: firma y cobra", "Nuestro propósito: seguridad", "Tu próxima colab empieza aquí"];
+const carExp = range(8, i => ({ src: `${M}collup-explicativo-${pad(i)}.jpg`, cap: COLLUP_EXP[i - 1], sub: "Carrusel: qué es CollUp" }));
 const carNeg = range(10, i => ({ src: `${M}collup-negocios-${pad(i)}.jpg`, cap: COLLUP_NEG[i - 1], sub: "Serie para negocios" }));
 const cristalAds = [
   { src: M + "cristalimp-anuncio-img1.jpg", cap: "Anuncio de producto", sub: "Feed 4:5 · precio y código" },
@@ -458,6 +461,7 @@ const DATA = {
       { name: "Carruseles", type: "gallery", count: 20,
         lead: "Serie de carruseles para TikTok e Instagram que lancé para CollUp: diez para creadores y diez para negocios. Copy, dirección de arte y diseño.",
         items: [...carCrea, ...carNeg] },
+      { name: "Qué es CollUp", type: "gallery", count: 8, lead: "Carrusel explicativo de CollUp: qué es, cómo funciona con mockups reales de la app y nuestro propósito: la seguridad.", items: carExp },
       { name: "Anuncios Meta", type: "gallery", count: 4,
         lead: "Campaña de ventas para Cristalimp, robot limpiacristales: piezas de feed y story, oferta de bienvenida y plan de test en Meta Ads.",
         items: cristalAds }]
@@ -555,11 +559,12 @@ const DATA = {
         lead: "Plataforma de colaboraciones entre creadores de contenido y negocios: hoteles, restaurantes y marcas encuentran creadores, negocian condiciones y firman acuerdos en un solo lugar.",
         list: ["App iOS en desarrollo, landing propia y lista de acceso anticipado.",
           "Campañas de email a hoteles y agencias de viajes de la Comunitat Valenciana.",
-          "Serie de 20 carruseles para TikTok e Instagram.",
+          "Serie de 20 carruseles para TikTok e Instagram y un carrusel explicativo de la app.",
           "Pitch deck para inversores."],
         chips: ["Producto", "Growth", "Email marketing", "React Native", "Supabase"],
         links: [["collup.info", "https://collup.info"]] },
       { name: "Landing", type: "web", web: WEBS[0] },
+      { name: "Qué es CollUp", type: "gallery", count: 8, lead: "Carrusel explicativo: qué es CollUp, cómo funciona paso a paso y por qué la seguridad es nuestro propósito.", items: carExp },
       { name: "Carruseles", type: "gallery", count: 20, items: [...carCrea, ...carNeg] }]
   },
   world: {
@@ -585,9 +590,9 @@ let openId = null, openPage = 0, lastFocus = null, galItems = [];
 const linksHtml = l => l && l.length ? `<div class="links">${l.map(([t, u], i) => `<a href="${u}" target="_blank" rel="noopener" class="${i ? "ghost" : ""}">${esc(t)} ↗</a>`).join("")}</div>` : "";
 const chipsHtml = c => c && c.length ? `<div class="chips">${c.map(x => `<span>${esc(x)}</span>`).join("")}</div>` : "";
 function webHtml(w) {
-  return `<div class="webcard"><button class="shot" type="button" data-web="${w.id}"><img src="${w.shot}" alt="Página de inicio de ${esc(w.name)}" loading="lazy"><span>Abrir la web aquí</span></button>
+  return `<div class="webcard"><a class="shot" href="${w.live || w.local}" target="_blank" rel="noopener"><img src="${w.shot}" alt="Página de inicio de ${esc(w.name)}" loading="lazy"><span>Abrir la web ↗</span></a>
     <h3>${esc(w.name)}</h3><div class="p-kicker">${esc(w.type)}</div><p class="p-lead" style="margin-top:.8em">${esc(w.desc)}</p>
-    <div class="links"><button type="button" data-web="${w.id}">Ver la web</button>${w.live ? `<a class="ghost" href="${w.live}" target="_blank" rel="noopener">Versión online ↗</a>` : ""}</div></div>`;
+    <div class="links"><a href="${w.live || w.local}" target="_blank" rel="noopener">Ver la web ↗</a></div></div>`;
 }
 function pageHtml(p) {
   galItems = [];
@@ -604,7 +609,7 @@ function pageHtml(p) {
   if (p.type === "video") return `<p class="p-lead">${esc(p.lead)}</p><div class="vids">${p.items.map(v => `<figure${v.wide ? ' class="wide"' : ""}><video src="${v.src}"${v.poster ? ` poster="${v.poster}"` : ""} controls playsinline preload="metadata" muted loop></video><figcaption><b>${esc(v.cap)}</b>${esc(v.sub)}</figcaption></figure>`).join("")}</div>`;
   if (p.type === "web") return webHtml(p.web);
   if (p.type === "webindex") return `<p class="p-lead">Diseño y programo webs para negocios: interactivas, rápidas y pensadas para que el cliente reserve o pida. Elige una para verla funcionando.</p>
-    <div class="gal wide">${WEBS.map((w, i) => `<figure><button type="button" data-goto="${i + 1}" style="cursor:pointer"><img src="${w.shot}" alt="${esc(w.name)}" loading="lazy" decoding="async"></button><figcaption><b>${esc(w.name)}</b>${esc(w.type)}</figcaption></figure>`).join("")}</div>`;
+    <div class="gal wide">${WEBS.map((w, i) => `<figure><a href="${w.live || w.local}" target="_blank" rel="noopener" style="display:block;cursor:pointer"><img src="${w.shot}" alt="${esc(w.name)}" loading="lazy" decoding="async"></a><figcaption><b>${esc(w.name)}</b>${esc(w.type)}</figcaption></figure>`).join("")}</div>`;
   if (p.type === "flows") return `<p class="p-lead">Flujos que conectan formularios, CRM, WhatsApp, Instagram y modelos de IA para que una inmobiliaria no pierda ningún contacto.</p>
     <div class="flowgrid"><div><b>Captación de leads</b><span>Formulario o portal → IA que cualifica → CRM → aviso por WhatsApp al agente.</span></div>
     <div><b>Asistente de visitas</b><span>Responde en Instagram y WhatsApp, filtra y agenda visitas en el calendario.</span></div>
