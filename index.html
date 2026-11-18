@@ -166,11 +166,11 @@ body:not(.xray) #xui *{pointer-events:none!important;}
 /* Calligraphy titles over each object (flat, embossed like the old skills heading) */
 #tags{position:fixed;inset:0;z-index:3;pointer-events:none;transition:opacity .5s;}
 .tag{position:absolute;left:0;top:0;pointer-events:auto;white-space:nowrap;text-align:center;
-  font-family:var(--f-script);font-weight:400;font-size:clamp(21px,2.05vw,33px);line-height:.95;color:#26262b;
+  font-family:var(--f-body);font-weight:600;letter-spacing:-.005em;font-size:clamp(14px,1.3vw,20px);line-height:1.12;color:#26262b;
   text-shadow:0 1px 0 #ffffffe6,0 -.5px 0 #0000002e,1px 2px 3px #00000014;background:none;border:0;padding:4px 8px;cursor:pointer;
   transition:color .2s, transform .05s linear;}
-.tag:hover,.tag.on{color:#000;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;}
-.tag:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px;}
+.tag:hover,.tag.on{color:#000;text-decoration:none;}
+.tag:focus-visible{outline:none;}
 body.xray #tags{opacity:0;pointer-events:none;}
 body.xray #tags .tag{pointer-events:none;}
 
@@ -577,11 +577,24 @@ const DATA = {
     pages: [
       { name: "La marca", type: "text",
         lead: "Gueckostudios es mi marca de ropa: streetwear con un gecko como símbolo y una idea por bandera, «Born to Adapt». La he levantado yo solo, de la primera línea de diseño a la primera venta.",
-        stats: [["1.000", "seguidores en TikTok en una sola semana"], ["1 persona", "detrás de todo: diseño, foto, web y producción"], ["100 %", "contenido, fotografía y tienda hechos por mí"]],
+        stats: [["1.000", "seguidores en TikTok en una sola semana"], ["1 persona", "detrás de todo: diseño, foto, web y producción"], ["Drop 001", "lanzado con cuenta atrás y precio que sube con los minutos"]],
         paras: ["No hay equipo, ni agencia, ni proveedor creativo: soy el diseñador, el fotógrafo, el desarrollador de la tienda, el community manager y quien gestiona la producción. Esa es la parte de la que más orgulloso estoy, porque cada decisión de la marca pasa por mis manos y se nota en que todo encaja.",
           "El lanzamiento en TikTok fue la prueba de que la marca conecta: en una semana pasamos de cero a 1.000 seguidores con contenido orgánico, pensado desde el primer segundo para retener y enseñar la prenda de verdad, sin postureo."],
         chips: ["Streetwear", "Born to Adapt", "Marca propia", "TikTok", "Instagram"],
-        links: [["Instagram @gueckostudios", "https://www.instagram.com/gueckostudios/"], ["gueckostudios.com", "https://gueckostudios.com"]] },
+        links: [["Instagram @gueckostudios", "https://www.instagram.com/gueckostudios/"]] },
+      { name: "Fotos", type: "gallery", count: 9,
+        lead: "Posts de Instagram de la marca: el lanzamiento del Drop 001 en calle y la campaña del desierto, hecha con IA.",
+        items: [
+          { src: M + "gueckostudios-drop-1.jpg", cap: "Drop 001 · bordado del gecko", sub: "Zip-hoodie negro, detalle del bordado" },
+          { src: M + "gueckostudios-drop-3.jpg", cap: "Drop 001 · graffiti", sub: "Sudadera «Born to Adapt» en calle" },
+          { src: M + "gueckostudios-drop-5.jpg", cap: "Drop 001 · espalda", sub: "Gráfico GUECKO «Born to be Guecko»" },
+          { src: M + "gueckostudios-drop-2.jpg", cap: "Drop 001 · retrato", sub: "Bordado y manga" },
+          { src: M + "gueckostudios-drop-4.jpg", cap: "Drop 001 · conjunto", sub: "Total black con bordado" },
+          { src: M + "gueckostudios-desert-1.jpg", cap: "Campaña del desierto · con IA", sub: "Zip-hoodies negro y gris" },
+          { src: M + "gueckostudios-desert-4.jpg", cap: "Campaña del desierto · con IA", sub: "Gráfico de espalda" },
+          { src: M + "gueckostudios-desert-2.jpg", cap: "Campaña del desierto · con IA", sub: "Detalle de las prendas" },
+          { src: M + "gueckostudios-desert-3.jpg", cap: "Campaña del desierto · con IA", sub: "Bordado azul del gecko" }],
+        links: [["Ver más en Instagram", "https://www.instagram.com/gueckostudios/"]] },
       { name: "Todo lo que hago", type: "text",
         lead: "Una marca de ropa son diez oficios a la vez. Estos son los que cubro yo, uno por uno.",
         list: ["Diseño de prendas: sudaderas, zip-hoodies y bordados. Dibujo los gráficos, el gecko y la tipografía, y los llevo a la prenda.",
@@ -590,12 +603,38 @@ const DATA = {
           "Fotografía: sesiones de producto y de calle con modelos, localizaciones urbanas, luz natural y retoque en Lightroom y Photoshop.",
           "Tienda online: la he diseñado y programado yo, pensada para que el drop se vea bien en el móvil y se compre en pocos toques.",
           "Contenido: vídeo corto y posts para TikTok e Instagram, con ganchos, edición al ritmo y copy propio.",
-          "Estrategia de lanzamiento: calendario de drops, cuenta atrás, teasers y lista de espera."],
-        chips: ["Illustrator", "Photoshop", "Lightroom", "CapCut", "Diseño web", "Fotografía"] },
-      { name: "Siguiente drop", type: "text",
-        lead: "La marca está en marcha y el siguiente drop ya viene: «New Drop Coming Soon».",
-        paras: ["Mi objetivo con Gueckostudios es que sea un proyecto que se sostenga solo: una comunidad pequeña pero fiel, producto bien hecho y una imagen reconocible. Todo lo que aprendo aquí (lanzar, vender, hacer crecer una cuenta desde cero) lo aplico después a mis otros proyectos y a las marcas con las que trabajo."],
-        links: [["Seguir en Instagram ↗", "https://www.instagram.com/gueckostudios/"], ["Ir a la tienda ↗", "https://gueckostudios.com"]] }]
+          "Estrategia de lanzamiento: cuenta atrás, teasers y un precio que sube con los minutos para premiar a quien llega primero."],
+        chips: ["Illustrator", "Photoshop", "Lightroom", "CapCut", "Diseño web", "Fotografía"],
+        links: [["Instagram @gueckostudios", "https://www.instagram.com/gueckostudios/"]] }]
+  },
+  olfato: {
+    kicker: "Startup · Fundador", title: "Olfato", color: "#e8185a",
+    role: "La app que huele el peligro antes que tu perro",
+    pages: [
+      { name: "Qué es", type: "text",
+        lead: "Olfato es la app que avisa a los dueños de perros de los peligros de su calle antes de que su perro los encuentre: veneno, cristales rotos, procesionaria, obras. La estoy desarrollando yo.",
+        stats: [["203 €", "cuesta de media un percance veterinario (UNESPA)"], ["7,56 M", "de perros registrados en España"], ["0 €", "para el dueño: la app es gratis"]],
+        paras: ["Pasear al perro es una apuesta a ciegas. Los avisos viven en grupos de WhatsApp y redes, sin verificar, o ni siquiera existen. Olfato convierte esos avisos en datos: cada incidencia lleva foto, la confirman otros dueños y aparece en un mapa realista con ruta segura.",
+          "El dueño avisa y pasea gratis. Quien paga es quien se beneficia del dato verificado: los ayuntamientos, que reciben un panel con mapa de calor e incidencias, y las aseguradoras, que reciben informes sellados para el perito."],
+        chips: ["App móvil", "Mapa", "Avisos con foto", "Ruta segura", "Panel para ayuntamientos", "Informes sellados"] },
+      { name: "App y paneles", type: "gallery", count: 3,
+        lead: "Mockups de la app para el dueño y de los dos paneles para quien paga: ayuntamientos y aseguradoras.",
+        items: [{ src: M + "olfato-app.jpg", cap: "App del dueño", sub: "Mapa con avisos verificados y ruta segura con un toque en la huella" },
+          { src: M + "olfato-panel-ayuntamiento.jpg", cap: "Panel del ayuntamiento", sub: "Mapa de calor, cola de incidencias y zonas calientes" },
+          { src: M + "olfato-panel-aseguradora.jpg", cap: "Panel de la aseguradora", sub: "Informes sellados para el perito y percances evitables por mes" }] },
+      { name: "Cómo funciona", type: "gallery", count: 1,
+        lead: "Un dato verificado, tres actores: el dueño avisa y pasea, Olfato verifica y reparte, y ayuntamientos y aseguradoras pagan y devuelven valor al dueño.",
+        items: [{ src: M + "olfato-flujo.jpg", cap: "Flujo del sistema", sub: "Datos en continuo, dinero en discontinuo" }] },
+      { name: "Vídeo", type: "video",
+        lead: "Vídeo de presentación de Olfato, hecho con IA.",
+        items: [{ src: M + "olfato-video.mp4", poster: M + "olfato-video.jpg", wide: 1, cap: "Olfato · presentación", sub: "Vídeo generado con IA" }] },
+      { name: "Ayuntamientos", type: "text",
+        lead: "Ya estoy en contacto con ayuntamientos y hay propuestas sobre la mesa.",
+        list: ["Para el ayuntamiento, Olfato es un mapa de calor de incidencias reales en su municipio, con foto y verificadas por vecinos.",
+          "Una cola de incidencias priorizada que se reparte a limpieza viaria, medio ambiente, alumbrado u obras.",
+          "Una vía de entrada sencilla: un primer municipio piloto y, desde ahí, ir sumando más.",
+          "Para la aseguradora: informes sellados con hora, ruta y foto para el perito."],
+        chips: ["Ayuntamientos", "Aseguradoras", "Piloto", "Datos verificados"] }]
   },
   ia: {
     kicker: "IA, programación & software", title: "IA y software", color: "#2fd4b9",
@@ -629,6 +668,9 @@ const DATA = {
           "Imágenes de producto y escenas para anuncios y carruseles, con dirección de arte propia.",
           "Los spots de Cristalimp y los carruseles de CollUp nacieron aquí, rematados con montaje, texto y marca.",
           "Mi método: prompts muy detallados, iteración rápida y una última capa de diseño y edición hecha a mano."],
+        vids: [{ src: M + "olfato-video.mp4", poster: M + "olfato-video.jpg", wide: 1, cap: "Olfato · presentación", sub: "Vídeo generado con IA" },
+          { src: M + "cristalimp-video-realista.mp4", cap: "Cristalimp · spot realista", sub: "Planos con IA (Higgsfield) y montaje con textos y oferta" },
+          { src: M + "cristalimp-anuncio-video.mp4", cap: "Cristalimp · anuncio 12 s", sub: "Formato story para Meta Ads" }],
         chips: ["Higgsfield", "Vídeo con IA", "Imagen con IA", "Prompting"] }]
   },
   contact: {
@@ -649,12 +691,13 @@ function webHtml(w) {
     <h3>${esc(w.name)}</h3><div class="p-kicker">${esc(w.type)}</div><p class="p-lead" style="margin-top:.8em">${esc(w.desc)}</p>
     <div class="links"><a href="${w.live || w.local}" target="_blank" rel="noopener">Ver la web ↗</a></div></div>`;
 }
+const vidsHtml = items => `<div class="vids">${items.map(v => `<figure${v.wide ? ' class="wide"' : ""}><video src="${v.src}"${v.poster ? ` poster="${v.poster}"` : ""} controls playsinline preload="metadata" muted loop></video><figcaption><b>${esc(v.cap)}</b>${esc(v.sub)}</figcaption></figure>`).join("")}</div>`;
 function pageHtml(p) {
   galItems = [];
   if (p.type === "text") {
     const ov = (CONTENT.sections[openId] && CONTENT.sections[openId].over || {})[openPage] || {};
     const lead = ov.lead != null ? ov.lead : p.lead, list = ov.list || p.list;
-    return `<p class="p-lead" data-ov="lead">${esc(lead)}</p>${p.stats ? `<div class="stats">${p.stats.map(([n, l]) => `<div><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>` : ""}${(p.paras || []).map(t => `<p class="p-para">${esc(t)}</p>`).join("")}${list ? `<ul class="p-list">${list.map((x, i) => `<li data-ov="list" data-li="${i}">${esc(x)}</li>`).join("")}</ul>` : ""}${chipsHtml(p.chips)}${linksHtml(p.links)}`;
+    return `<p class="p-lead" data-ov="lead">${esc(lead)}</p>${p.stats ? `<div class="stats">${p.stats.map(([n, l]) => `<div><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>` : ""}${(p.paras || []).map(t => `<p class="p-para">${esc(t)}</p>`).join("")}${p.vids ? vidsHtml(p.vids) : ""}${list ? `<ul class="p-list">${list.map((x, i) => `<li data-ov="list" data-li="${i}">${esc(x)}</li>`).join("")}</ul>` : ""}${chipsHtml(p.chips)}${linksHtml(p.links)}`;
   }
   if (p.type === "custom") return "";
   if (p.type === "gallery") {
@@ -1305,6 +1348,9 @@ function build() {
   { const g = new THREE.Group();
     g.add(mesh(inflate((x, w, h) => { x.beginPath(); x.moveTo(w * .36, h * .14); x.quadraticCurveTo(w * .5, h * .26, w * .64, h * .14); x.lineTo(w * .92, h * .3); x.lineTo(w * .82, h * .46); x.lineTo(w * .72, h * .4); x.lineTo(w * .72, h * .88); x.lineTo(w * .28, h * .88); x.lineTo(w * .28, h * .4); x.lineTo(w * .18, h * .46); x.lineTo(w * .08, h * .3); x.closePath(); x.lineJoin = "round"; x.lineWidth = 18; x.fill(); x.stroke(); }, { size: 1.9, depth: .32, r: 5 }), MAT.knit(0x9cc08a)));
     addItem("moda", "Moda", g, [6.5, 5.7, -2.2], .7, 0, 0x4f7a3c); }
+  { const g = new THREE.Group();
+    g.add(mesh(inflate((x, w, h) => { x.beginPath(); x.moveTo(w * .5, h * .86); x.bezierCurveTo(w * .02, h * .56, w * .1, h * .12, w * .3, h * .14); x.bezierCurveTo(w * .42, h * .15, w * .48, h * .24, w * .5, h * .3); x.bezierCurveTo(w * .52, h * .24, w * .58, h * .15, w * .7, h * .14); x.bezierCurveTo(w * .9, h * .12, w * .98, h * .56, w * .5, h * .86); x.closePath(); x.lineJoin = "round"; x.lineWidth = 14; x.fill(); x.stroke(); }, { cw: 420, ch: 380, size: 1.9, depth: .42, r: 6, flat: .5 }), MAT.balloon(0xe8185a)));
+    addItem("olfato", "Olfato", g, [-3.9, 5.8, -2.4], .72, 0, 0xb3123f); }
   { const g = new THREE.Group(); g.add(mesh(inflate(textDraw("</>", 700, .6), { cw: 520, ch: 300, size: 2.0, depth: .38, r: 6, thr: .34 }), MAT.balloon(0x19c9ad)));
     addItem("ia", "IA y software", g, [-6.5, 5.7, -2.2], .72, 0, 0x16807a); }
   { const g = new THREE.Group(); g.add(mesh(inflate(textDraw("@", 900, .74), { cw: 320, ch: 320, size: 1.4, depth: .28, r: 5 }), MAT.waffle(0xc4b2ff)));
