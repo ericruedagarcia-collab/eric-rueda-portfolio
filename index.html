@@ -233,6 +233,11 @@ body.xray #tags .tag{pointer-events:none;}
 .flowgrid div{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;}
 .flowgrid b{display:block;font-size:14px;margin-bottom:4px;}
 .flowgrid span{font-size:13px;color:var(--ink-soft);line-height:1.45;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:18px 0}
+.stats div{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
+.stats b{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.stats span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:6px;line-height:1.35}
+.p-para{font-size:15.5px;line-height:1.65;margin:0 0 1em;max-width:62ch}
 .contact-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px;background:#fff;max-width:520px;}
 .contact-row div{min-width:0;}
 .contact-row small{display:block;font:500 10px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px;}
@@ -499,13 +504,11 @@ const DATA = {
     kicker: "Filmmaking & edición", title: "Vídeo y edición", color: "#16161a",
     role: "Grabo, edito y hago que se vea hasta el final",
     pages: [
-      { name: "Vídeos", type: "video",
-        lead: "Spots verticales para redes: guion, generación de planos con IA, montaje, textos y ritmo.",
+      { name: "Vídeo y edición", type: "video",
+        lead: "Spots verticales para redes, edición de vídeo y colour grading para creadora de contenido, y una pieza grabada y editada por mí en Nueva York.",
         items: [{ src: M + "cristalimp-video-realista.mp4", cap: "Cristalimp · spot realista", sub: "Planos con IA (Higgsfield) y montaje con textos y oferta" },
-          { src: M + "cristalimp-anuncio-video.mp4", cap: "Cristalimp · anuncio 12 s", sub: "Formato story para Meta Ads" }] },
-      { name: "Edición y color", type: "video",
-        lead: "Edición de vídeo y colour grading para creadora de contenido, más una pieza grabada y editada por mí en Nueva York.",
-        items: [{ src: M + "sara-1.mp4", poster: M + "sara-1.jpg", cap: "Sara Morales · edición y colour grading", sub: "Corte al ritmo, subtítulos animados y color" },
+          { src: M + "cristalimp-anuncio-video.mp4", cap: "Cristalimp · anuncio 12 s", sub: "Formato story para Meta Ads" },
+          { src: M + "sara-1.mp4", poster: M + "sara-1.jpg", cap: "Sara Morales · edición y colour grading", sub: "Corte al ritmo, subtítulos animados y color" },
           { src: M + "sara-2.mp4", poster: M + "sara-2.jpg", cap: "Sara Morales · edición y colour grading", sub: "Formato vertical para Reels" },
           { src: M + "sara-3.mp4", poster: M + "sara-3.jpg", cap: "Sara Morales · edición y colour grading", sub: "Textos en pantalla y gradación de color" },
           { src: M + "nyc-1.mp4", poster: M + "nyc-1.jpg", wide: 1, cap: "NY world cup walk · grabado y editado por mí", sub: "Nueva York · imagen, montaje y color propios" }] },
@@ -519,7 +522,7 @@ const DATA = {
   },
   brand: {
     kicker: "Branding & diseño gráfico", title: "Identidad visual", color: "#8a5cff",
-    role: "Logos, identidades, posts y ropa",
+    role: "Logos, identidades y piezas para redes",
     pages: [
       { name: "Campañas", type: "gallery", count: 11,
         lead: "Carteles, vallas y piezas de campaña: del concepto creativo al diseño final de cada soporte.",
@@ -538,10 +541,6 @@ const DATA = {
         links: [["Cartel Club Patí (PDF)", M + "cartel-club-pati.pdf"], ["Valla Bicentury (PDF)", M + "bicentury-valla-publicitaria.pdf"], ["Presentación Club Patí (PDF)", M + "club-pati-presentacion.pdf"]] },
       { name: "Logos", type: "gallery", count: 5, lead: "Identidades visuales que he creado para mis negocios y para clientes.", items: logos },
       { name: "Posts", type: "gallery", count: 8, lead: "Piezas para redes: lanzamientos, anuncios y carruseles.", items: [...inmobiaPosts, ...cristalAds.slice(0, 2), carCrea[0], carNeg[0], carCrea[2], carNeg[5]] },
-      { name: "Ropa · Gueckostudios", type: "text",
-        lead: "Gueckostudios es mi marca de ropa: diseño las prendas, la identidad de marca y el contenido para venderla.",
-        list: ["Diseño de prendas y gráficos.", "Identidad visual y logo de la marca.", "Fotografía de producto y contenido para redes."],
-        chips: ["Illustrator", "Photoshop", "Canva"] },
       { name: "Herramientas", type: "text",
         lead: "Más de 8 años creando identidades visuales, piezas para redes y material promocional.",
         list: ["Canva a nivel experto para producir rápido y con criterio.", "Photoshop, Illustrator e InDesign para branding y piezas de alto nivel."],
@@ -572,6 +571,66 @@ const DATA = {
         "Monitor en YMCA Camp Fuller, Rhode Island (EE. UU.), verano 2026.", "Formación en Publicidad y Comunicación Corporativa; base en comunicación audiovisual."],
       chips: ["ES", "CA", "EN", "IT", "Rhode Island", "Boston", "NYC"] }]
   },
+  moda: {
+    kicker: "Marca de ropa · Fundador", title: "Gueckostudios", color: "#b565d9",
+    role: "Born to Adapt · una marca llevada por una sola persona",
+    pages: [
+      { name: "La marca", type: "text",
+        lead: "Gueckostudios es mi marca de ropa: streetwear con un gecko como símbolo y una idea por bandera, «Born to Adapt». La he levantado yo solo, de la primera línea de diseño a la primera venta.",
+        stats: [["1.000", "seguidores en TikTok en una sola semana"], ["1 persona", "detrás de todo: diseño, foto, web y producción"], ["100 %", "contenido, fotografía y tienda hechos por mí"]],
+        paras: ["No hay equipo, ni agencia, ni proveedor creativo: soy el diseñador, el fotógrafo, el desarrollador de la tienda, el community manager y quien gestiona la producción. Esa es la parte de la que más orgulloso estoy, porque cada decisión de la marca pasa por mis manos y se nota en que todo encaja.",
+          "El lanzamiento en TikTok fue la prueba de que la marca conecta: en una semana pasamos de cero a 1.000 seguidores con contenido orgánico, pensado desde el primer segundo para retener y enseñar la prenda de verdad, sin postureo."],
+        chips: ["Streetwear", "Born to Adapt", "Marca propia", "TikTok", "Instagram"],
+        links: [["Instagram @gueckostudios", "https://www.instagram.com/gueckostudios/"], ["gueckostudios.com", "https://gueckostudios.com"]] },
+      { name: "Todo lo que hago", type: "text",
+        lead: "Una marca de ropa son diez oficios a la vez. Estos son los que cubro yo, uno por uno.",
+        list: ["Diseño de prendas: sudaderas, zip-hoodies y bordados. Dibujo los gráficos, el gecko y la tipografía, y los llevo a la prenda.",
+          "Identidad de marca: logo, paleta negra con acentos rosa-violeta, tono de voz y el lema «Born to Adapt».",
+          "Producción: elijo tejidos y patrones, preparo los archivos de bordado y estampación y coordino la fabricación hasta tener la prenda en la mano.",
+          "Fotografía: sesiones de producto y de calle con modelos, localizaciones urbanas, luz natural y retoque en Lightroom y Photoshop.",
+          "Tienda online: la he diseñado y programado yo, pensada para que el drop se vea bien en el móvil y se compre en pocos toques.",
+          "Contenido: vídeo corto y posts para TikTok e Instagram, con ganchos, edición al ritmo y copy propio.",
+          "Estrategia de lanzamiento: calendario de drops, cuenta atrás, teasers y lista de espera."],
+        chips: ["Illustrator", "Photoshop", "Lightroom", "CapCut", "Diseño web", "Fotografía"] },
+      { name: "Siguiente drop", type: "text",
+        lead: "La marca está en marcha y el siguiente drop ya viene: «New Drop Coming Soon».",
+        paras: ["Mi objetivo con Gueckostudios es que sea un proyecto que se sostenga solo: una comunidad pequeña pero fiel, producto bien hecho y una imagen reconocible. Todo lo que aprendo aquí (lanzar, vender, hacer crecer una cuenta desde cero) lo aplico después a mis otros proyectos y a las marcas con las que trabajo."],
+        links: [["Seguir en Instagram ↗", "https://www.instagram.com/gueckostudios/"], ["Ir a la tienda ↗", "https://gueckostudios.com"]] }]
+  },
+  ia: {
+    kicker: "IA, programación & software", title: "IA y software", color: "#2fd4b9",
+    role: "Programo, automatizo y creo con IA",
+    pages: [
+      { name: "Resumen", type: "text",
+        lead: "Mi forma de trabajar combina una base de programación con las mejores herramientas de IA. Entiendo cómo funciona el código, y por eso puedo dirigir a la IA y construir producto de verdad: webs, apps y contenido.",
+        stats: [["3", "lenguajes: Python, Java y SQL"], ["2023", "concurso provincial de robótica ganado"], ["2", "agentes de código: Claude Code y Codex"]],
+        chips: ["Python", "Java", "SQL", "Robótica", "Claude Code", "Codex", "Higgsfield"] },
+      { name: "Programación", type: "text",
+        lead: "Conocimientos básicos sólidos de programación, los que permiten entender lo que se construye en vez de copiar y pegar.",
+        list: ["Python: scripts, automatización, tratamiento de datos y herramientas propias.",
+          "Java: programación orientada a objetos y lógica de programas.",
+          "SQL: consultas, tablas y relaciones; lo uso con Supabase en mis proyectos.",
+          "Esa base me deja revisar, depurar y corregir el código que genera una IA, no solo aceptarlo."],
+        chips: ["Python", "Java", "SQL", "Supabase"] },
+      { name: "Robótica", type: "text",
+        lead: "Ganador del concurso provincial de robótica en 2023.",
+        paras: ["Diseñar, montar y programar un robot que cumple una prueba real me enseñó a trabajar con restricciones: tiempo, hardware que falla y un equipo que tiene que ir a una. Ahí empezó mi gusto por construir cosas que funcionan."],
+        chips: ["Robótica", "Concurso provincial", "2023", "Trabajo en equipo"] },
+      { name: "Claude Code y Codex", type: "text",
+        lead: "Controlo y uso a diario los dos grandes agentes de código, Claude Code y Codex, para desarrollo web y software.",
+        list: ["Claude Code: lo uso para construir y mantener webs completas, como este portfolio, con cambios, pruebas y despliegue incluidos.",
+          "Codex: segundo agente para contrastar enfoques, revisar código y paralelizar tareas.",
+          "Sé cuándo usar cada uno, cómo darles contexto, cómo acotarles el trabajo y cómo verificar el resultado.",
+          "Resultado: de la idea a una web o una app publicada en horas, con criterio de diseñador y control de desarrollador."],
+        chips: ["Claude Code", "Codex", "Webs", "Apps", "Vercel", "GitHub"] },
+      { name: "Higgsfield", type: "text",
+        lead: "Higgsfield es mi herramienta para crear contenido con IA: imágenes y vídeo de calidad de producción.",
+        list: ["Planos de vídeo imposibles de grabar, generados a partir de un buen prompt y una referencia.",
+          "Imágenes de producto y escenas para anuncios y carruseles, con dirección de arte propia.",
+          "Los spots de Cristalimp y los carruseles de CollUp nacieron aquí, rematados con montaje, texto y marca.",
+          "Mi método: prompts muy detallados, iteración rápida y una última capa de diseño y edición hecha a mano."],
+        chips: ["Higgsfield", "Vídeo con IA", "Imagen con IA", "Prompting"] }]
+  },
   contact: {
     kicker: "Hablemos", title: "Contacto", color: "#a58bff",
     role: "Proyectos, colaboraciones y programas",
@@ -595,7 +654,7 @@ function pageHtml(p) {
   if (p.type === "text") {
     const ov = (CONTENT.sections[openId] && CONTENT.sections[openId].over || {})[openPage] || {};
     const lead = ov.lead != null ? ov.lead : p.lead, list = ov.list || p.list;
-    return `<p class="p-lead" data-ov="lead">${esc(lead)}</p>${list ? `<ul class="p-list">${list.map((x, i) => `<li data-ov="list" data-li="${i}">${esc(x)}</li>`).join("")}</ul>` : ""}${chipsHtml(p.chips)}${linksHtml(p.links)}`;
+    return `<p class="p-lead" data-ov="lead">${esc(lead)}</p>${p.stats ? `<div class="stats">${p.stats.map(([n, l]) => `<div><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>` : ""}${(p.paras || []).map(t => `<p class="p-para">${esc(t)}</p>`).join("")}${list ? `<ul class="p-list">${list.map((x, i) => `<li data-ov="list" data-li="${i}">${esc(x)}</li>`).join("")}</ul>` : ""}${chipsHtml(p.chips)}${linksHtml(p.links)}`;
   }
   if (p.type === "custom") return "";
   if (p.type === "gallery") {
@@ -1245,7 +1304,9 @@ function build() {
     addItem("world", "Idiomas y viajes", g, [5.9, 1.45, .6], .72, 0, 0x1c6fc4); }
   { const g = new THREE.Group();
     g.add(mesh(inflate((x, w, h) => { x.beginPath(); x.moveTo(w * .36, h * .14); x.quadraticCurveTo(w * .5, h * .26, w * .64, h * .14); x.lineTo(w * .92, h * .3); x.lineTo(w * .82, h * .46); x.lineTo(w * .72, h * .4); x.lineTo(w * .72, h * .88); x.lineTo(w * .28, h * .88); x.lineTo(w * .28, h * .4); x.lineTo(w * .18, h * .46); x.lineTo(w * .08, h * .3); x.closePath(); x.lineJoin = "round"; x.lineWidth = 18; x.fill(); x.stroke(); }, { size: 1.9, depth: .32, r: 5 }), MAT.knit(0x9cc08a)));
-    addItem("brand", "Moda", g, [6.5, 5.7, -2.2], .7, 3, 0x4f7a3c); }
+    addItem("moda", "Moda", g, [6.5, 5.7, -2.2], .7, 0, 0x4f7a3c); }
+  { const g = new THREE.Group(); g.add(mesh(inflate(textDraw("</>", 700, .6), { cw: 520, ch: 300, size: 2.0, depth: .38, r: 6, thr: .34 }), MAT.balloon(0x19c9ad)));
+    addItem("ia", "IA y software", g, [-6.5, 5.7, -2.2], .72, 0, 0x16807a); }
   { const g = new THREE.Group(); g.add(mesh(inflate(textDraw("@", 900, .74), { cw: 320, ch: 320, size: 1.4, depth: .28, r: 5 }), MAT.waffle(0xc4b2ff)));
     addItem("contact", "Contacto", g, [3.9, 5.8, -2.4], .72, 0, 0x6b4fd8); }
 }
