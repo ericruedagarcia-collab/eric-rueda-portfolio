@@ -384,7 +384,6 @@ body.editing #editBtn{background:var(--accent);border-color:var(--accent);color:
   <button id="xExit" type="button">← Volver al estudio</button>
   <aside id="xcard" role="dialog" aria-labelledby="xTitle"></aside>
 </div>
-<button id="editBtn" type="button" hidden>✎ Editar</button>
 <div id="edBar" hidden role="status"><span id="edMsg">Modo edición · abre un objeto para añadir contenido</span><button type="button" class="save" id="edSave" disabled>Guardar</button><button type="button" id="edExit">Salir</button></div>
 <input type="file" id="edFile" accept="image/*,video/*,.mov,.MOV,.mp4,.m4v,.webm" multiple hidden>
 <div id="intro"><div class="in"><h1>Eric Rueda</h1><div class="bar"><i id="introBar"></i></div><small id="introTxt">Montando el estudio…</small><button id="enter" type="button">Entrar ▸</button><span class="snd">Con sonido</span><span class="ios" id="iosHint">Para verla a pantalla completa: Compartir ▸ «Añadir a pantalla de inicio»</span></div></div>
@@ -429,6 +428,9 @@ const logos = [
   { src: M + "logo-krea.png", cap: "KREA la vall", sub: "Mi agencia de marketing", logo: 1 },
   { src: M + "logo-inmobia.png", cap: "InmobIA", sub: "Agencia de IA para inmobiliarias", logo: 1 },
   { src: M + "logo-collup.png", cap: "CollUp", sub: "Icono de la app", logo: 1 },
+  { src: M + "logo-olfato-horizontal.jpg", cap: "Olfato", sub: "Logo de la app para dueños de perros", logo: 1, bg: "#0f1b24" },
+  { src: M + "logo-gueckostudios.jpg", cap: "Gueckostudios", sub: "Gecko-G de la marca de ropa", logo: 1, bg: "#000" },
+  { src: M + "logo-bufit.jpg", cap: "BUFIT", sub: "Logo del club de viajes y conexiones", logo: 1, bg: "#0e0e0e" },
   { src: M + "logo-cristalimp.png", cap: "Cristalimp", sub: "Logo v7 para tienda online", logo: 1 },
   { src: M + "cristalimp-facebook-perfil-claro.jpg", cap: "Cristalimp", sub: "Foto de perfil para redes", logo: 1 }];
 const WEBS = [
@@ -539,7 +541,7 @@ const DATA = {
           { src: M + "clubpati-video.jpg", cap: "Club Patí · vídeo", sub: "Pieza de vídeo para redes" },
           { src: M + "clubpati-email.jpg", cap: "Club Patí · e-mail marketing", sub: "Correo de bienvenida a los inscritos" }],
         links: [["Cartel Club Patí (PDF)", M + "cartel-club-pati.pdf"], ["Valla Bicentury (PDF)", M + "bicentury-valla-publicitaria.pdf"], ["Presentación Club Patí (PDF)", M + "club-pati-presentacion.pdf"]] },
-      { name: "Logos", type: "gallery", count: 5, lead: "Identidades visuales que he creado para mis negocios y para clientes.", items: logos },
+      { name: "Logos", type: "gallery", count: 8, lead: "Identidades visuales que he creado para mis negocios, mis proyectos y para clientes.", items: logos },
       { name: "Posts", type: "gallery", count: 8, lead: "Piezas para redes: lanzamientos, anuncios y carruseles.", items: [...inmobiaPosts, ...cristalAds.slice(0, 2), carCrea[0], carNeg[0], carCrea[2], carNeg[5]] },
       { name: "Herramientas", type: "text",
         lead: "Más de 8 años creando identidades visuales, piezas para redes y material promocional.",
@@ -703,7 +705,7 @@ function pageHtml(p) {
   if (p.type === "custom") return "";
   if (p.type === "gallery") {
     galItems = p.items;
-    return `${p.lead ? `<p class="p-lead">${esc(p.lead)}</p>` : ""}<div class="gal ${p.items.length <= 4 && !p.items[0].logo ? "wide" : ""}">${p.items.map((it, i) => `<figure class="${it.logo ? "logo-tile" : ""}"><button type="button" data-gi="${i}"><img src="${it.src}" alt="${esc(it.cap)}" loading="lazy" decoding="async"></button><figcaption><b>${esc(it.cap)}</b>${esc(it.sub || "")}</figcaption></figure>`).join("")}</div>${linksHtml(p.links)}`;
+    return `${p.lead ? `<p class="p-lead">${esc(p.lead)}</p>` : ""}<div class="gal ${p.items.length <= 4 && !p.items[0].logo ? "wide" : ""}">${p.items.map((it, i) => `<figure class="${it.logo ? "logo-tile" : ""}"><button type="button" data-gi="${i}"${it.bg ? ` style="background:${it.bg}"` : ""}><img src="${it.src}" alt="${esc(it.cap)}" loading="lazy" decoding="async"></button><figcaption><b>${esc(it.cap)}</b>${esc(it.sub || "")}</figcaption></figure>`).join("")}</div>${linksHtml(p.links)}`;
   }
   if (p.type === "video") return `<p class="p-lead">${esc(p.lead)}</p><div class="vids">${p.items.map(v => `<figure${v.wide ? ' class="wide"' : ""}><video src="${v.src}"${v.poster ? ` poster="${v.poster}"` : ""} controls playsinline preload="metadata" muted loop></video><figcaption><b>${esc(v.cap)}</b>${esc(v.sub)}</figcaption></figure>`).join("")}</div>`;
   if (p.type === "web") return webHtml(p.web);
@@ -812,7 +814,7 @@ document.getElementById("contactChip").addEventListener("click", e => { const r 
 
 /* ───── Edit mode (owner only): add / change content, then publish content.json ───── */
 let EDIT = false, ART = null, ASSETS = null, dirty = false, pendingDeletes = [];
-const editBtn = document.getElementById("editBtn"), edBar = document.getElementById("edBar"), edMsg = document.getElementById("edMsg"), edSave = document.getElementById("edSave"), edFile = document.getElementById("edFile");
+const editBtn = document.getElementById("editBtn") || document.createElement("button"), edBar = document.getElementById("edBar"), edMsg = document.getElementById("edMsg"), edSave = document.getElementById("edSave"), edFile = document.getElementById("edFile");
 const DRAFT_KEY = "eric-studio-draft";
 function markDirty(msg) { dirty = true; edSave.disabled = false; edMsg.textContent = msg || "Cambios sin guardar"; try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify(CONTENT)); } catch (_) {} }
 function setEdit(on) {
