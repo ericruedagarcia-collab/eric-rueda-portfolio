@@ -485,7 +485,9 @@ const DATA = {
         links: [["Instagram @saramoralesu", "https://www.instagram.com/saramoralesu/"]] },
       { name: "Vídeos", type: "text",
         lead: "Todo mi contenido en vídeo: lo que grabo, edito y publico para marcas y creadoras. Cada pieza nace del filmmaking: idea, guion, rodaje, montaje y color.",
-        vids: [{ src: "https://f9f5lznx4bycjp81.public.blob.vercel-storage.com/media/1792662187524-1009-HY8yjz73U4izwzYI2yZ8hjY5cDO2N8.MOV", cap: "Reset Tattoo Úxo · vídeo editado", sub: "Vídeo vertical de 1 min 26 s editado por mí" },
+        vids: [{ src: "https://f9f5lznx4bycjp81.public.blob.vercel-storage.com/media/1795783137381-ssstik.io_1795782110358-ntSC0TVkpSbm3CIwuSkwOdZ9BQTEPU.mp4", wide: 1, cap: "Vídeo nuevo 1", sub: "Formato horizontal · 15 s" },
+          { src: "https://f9f5lznx4bycjp81.public.blob.vercel-storage.com/media/1795783163349-ssstik.io_1795782277761-wyhUPKTU47Sv2dWfUUAwhdamC0DDoM.mp4", wide: 1, cap: "Vídeo nuevo 2", sub: "Formato horizontal · 37 s" },
+          { src: "https://f9f5lznx4bycjp81.public.blob.vercel-storage.com/media/1792662187524-1009-HY8yjz73U4izwzYI2yZ8hjY5cDO2N8.MOV", cap: "Reset Tattoo Úxo · vídeo editado", sub: "Vídeo vertical de 1 min 26 s editado por mí" },
           { src: M + "nyc-1.mp4", poster: M + "nyc-1.jpg", wide: 1, cap: "NY world cup walk · grabado y editado por mí", sub: "Nueva York · imagen, montaje y color propios" },
           { src: M + "sara-1.mp4", poster: M + "sara-1.jpg", cap: "Sara Morales · Reels", sub: "Corte al ritmo, subtítulos animados y color" },
           { src: M + "sara-2.mp4", poster: M + "sara-2.jpg", cap: "Sara Morales · Reels", sub: "Formato vertical pensado para retener" },
@@ -767,7 +769,9 @@ let blockImgs = [];
 function blocksHtml(list) {
   blockImgs = [];
   const ctl = i => `<div class="ed-ctl"><button type="button" data-bmv="-1" data-bi="${i}" aria-label="Subir">↑</button><button type="button" data-bmv="1" data-bi="${i}" aria-label="Bajar">↓</button><button type="button" data-bedit="${i}" aria-label="Editar">✎</button><button type="button" class="del" data-bdel="${i}" aria-label="Borrar">✕</button></div>`;
+  const isDup = b => b.type === "video" && DATA[openId].pages.some(pg => (pg.vids || []).some(v => v.src === srcOf(b)));
   return `<div class="ublocks">${list.map((b, i) => {
+    if (isDup(b)) return "";
     if (b.type === "text") return `<div class="ublock">${ctl(i)}${b.title ? `<h4>${esc(b.title)}</h4>` : ""}<p>${esc(b.text || "")}</p></div>`;
     if (b.type === "image") { const k = blockImgs.push({ src: srcOf(b), cap: b.caption || "", sub: "" }) - 1;
       return `<div class="ublock">${ctl(i)}<figure><button type="button" class="imgbtn" data-ubi="${k}"><img src="${esc(srcOf(b))}" alt="${esc(b.caption || "Imagen")}" loading="lazy" onerror="this.closest('.ublock').classList.add('missing');this.remove()"></button>${b.caption ? `<figcaption>${esc(b.caption)}</figcaption>` : ""}</figure></div>`; }
