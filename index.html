@@ -357,7 +357,7 @@ body.editing #editBtn{background:var(--accent);border-color:var(--accent);color:
 
 <header id="id">
   <h1>Eric Rueda<br><span>García</span></h1>
-  <p>Social media · Webs · Filmmaking · Automatización con IA<br>CEO de KREA la vall &amp; InmobIA · Castellón → mundo</p>
+  <p>Social media · Creación de contenido · Filmmaking · Webs · IA<br>CEO de KREA la vall &amp; InmobIA · Castellón → mundo</p>
 </header>
 
 <button id="contactChip" type="button">Contacto</button>
@@ -384,6 +384,7 @@ body.editing #editBtn{background:var(--accent);border-color:var(--accent);color:
   <button id="xExit" type="button">← Volver al estudio</button>
   <aside id="xcard" role="dialog" aria-labelledby="xTitle"></aside>
 </div>
+<button id="editBtn" type="button" hidden>✎ Editar</button>
 <div id="edBar" hidden role="status"><span id="edMsg">Modo edición · abre un objeto para añadir contenido</span><button type="button" class="save" id="edSave" disabled>Guardar</button><button type="button" id="edExit">Salir</button></div>
 <input type="file" id="edFile" accept="image/*,video/*,.mov,.MOV,.mp4,.m4v,.webm" multiple hidden>
 <div id="intro"><div class="in"><h1>Eric Rueda</h1><div class="bar"><i id="introBar"></i></div><small id="introTxt">Montando el estudio…</small><button id="enter" type="button">Entrar ▸</button><span class="snd">Con sonido</span><span class="ios" id="iosHint">Para verla a pantalla completa: Compartir ▸ «Añadir a pantalla de inicio»</span></div></div>
@@ -458,20 +459,22 @@ const DATA = {
     pages: [
       { name: "Resumen", type: "text",
         lead: "KREA la vall es mi agencia de marketing en Castellón: filmmaking, fotografía y contenido para redes. Llevo la estrategia, grabo, edito, publico y lanzo los anuncios.",
-        list: ["Gestión y optimización de varias cuentas a la vez: +90 % de visibilidad y engagement.",
-          "Campañas creativas montadas sobre las tendencias del momento, medidas en interacciones y alcance.",
-          "Creación y ajuste de campañas en Meta Ads.",
+        list: ["Social media management: gestión y optimización de varias cuentas a la vez, con +90 % de visibilidad y engagement.",
+          "Creación de contenido: ideas, guion, grabación y edición de Reels, TikToks y Shorts pensados para retener.",
+          "Filmmaking: rodaje con móvil, cámara y dron DJI, montaje y color.",
+          "Campañas creativas montadas sobre las tendencias del momento, y anuncios en Meta Ads.",
           "Gestión de canales de creadores e influencers: hooks, estructuras de post y miniaturas que suman millones de visualizaciones orgánicas.",
           "Informes de rendimiento para decidir qué repetir y qué cambiar."],
-        chips: ["Instagram", "TikTok", "Facebook", "LinkedIn", "Meta Ads", "ManyChat", "Canva", "CapCut"],
+        chips: ["Instagram", "TikTok", "YouTube", "Meta Ads", "CapCut", "Premiere Pro", "DaVinci Resolve", "DJI"],
         links: [["Instagram @krea.lavall", "https://www.instagram.com/krea.lavall/"]] },
-      { name: "Carruseles", type: "gallery", count: 20,
-        lead: "Serie de carruseles para TikTok e Instagram que lancé para CollUp: diez para creadores y diez para negocios. Copy, dirección de arte y diseño.",
-        items: [...carCrea, ...carNeg] },
-      { name: "Qué es CollUp", type: "gallery", count: 8, lead: "Carrusel explicativo de CollUp: qué es, cómo funciona con mockups reales de la app y nuestro propósito: la seguridad.", items: carExp },
-      { name: "Anuncios Meta", type: "gallery", count: 4,
-        lead: "Campaña de ventas para Cristalimp, robot limpiacristales: piezas de feed y story, oferta de bienvenida y plan de test en Meta Ads.",
-        items: cristalAds }]
+      { name: "Vídeos", type: "text",
+        lead: "Todo mi contenido en vídeo: lo que grabo, edito y publico para marcas y creadoras. Cada pieza nace del filmmaking: idea, guion, rodaje, montaje y color.",
+        vids: [{ src: "https://f9f5lznx4bycjp81.public.blob.vercel-storage.com/media/1792662187524-1009-HY8yjz73U4izwzYI2yZ8hjY5cDO2N8.MOV", cap: "Reset Tattoo Úxo · vídeo editado", sub: "Vídeo vertical de 1 min 26 s editado por mí" },
+          { src: M + "nyc-1.mp4", poster: M + "nyc-1.jpg", wide: 1, cap: "NY world cup walk · grabado y editado por mí", sub: "Nueva York · imagen, montaje y color propios" },
+          { src: M + "sara-1.mp4", poster: M + "sara-1.jpg", cap: "Sara Morales · Reels", sub: "Corte al ritmo, subtítulos animados y color" },
+          { src: M + "sara-2.mp4", poster: M + "sara-2.jpg", cap: "Sara Morales · Reels", sub: "Formato vertical pensado para retener" },
+          { src: M + "sara-3.mp4", poster: M + "sara-3.jpg", cap: "Sara Morales · Reels", sub: "Textos en pantalla y gradación de color" },
+          { src: M + "cristalimp-video-realista.mp4", cap: "Cristalimp · spot realista", sub: "Planos con IA (Higgsfield) y montaje con textos y oferta" }] }]
   },
   auto: {
     kicker: "AI Automation Developer & CEO", title: "InmobIA", color: "#2fbf8f", logo: M + "logo-inmobia.png",

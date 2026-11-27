@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 // Hash PBKDF2 de la clave de edición (la clave en sí no está en el código).
-const SALT = "15afc3d786db1804dd71667c79805815", HASH = "54b22cddcfbe7c48309e137ae714502365fe3b5e95c6ed741ab2e617a9f7ee2d", ITER = 300000;
+const SALT = "a98e180f4242ad579532834cc483f376", HASH = "c851c070c3a18025ae3606bb467ab9445ab32346b5f6a9b0241c54f5630b5c78", ITER = 300000;
 function norm(s) { return String(s || "").toLowerCase().replace(/[^a-z0-9]/g, ""); }
 function check(pw) {
   try {
