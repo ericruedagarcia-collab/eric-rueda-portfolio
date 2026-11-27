@@ -1551,26 +1551,27 @@ const XU = { uT: { value: 0 }, uK: { value: 0 } };
 const XR = { on: false, k: 0, target: 0, built: false, group: new THREE.Group(), shells: [], pick: [], mats: {}, sel: null, lobe: 0, hov: null, hovLobe: 0,
   rot: 0, camPos: new THREE.Vector3(), look: new THREE.Vector3(), camInit: false, labels: [], heart: null, lungs: [], brainMat: null };
 const XDATA = {
-  brain: { label: "Cerebro", title: "Cerebro", kick: "Cerebro · todo", sub: "Aquí nacen las ideas y se convierten en proyectos. Toca cada lóbulo para recorrerlo por zonas.",
+  brain: { label: "Cerebro", title: "Cerebro", kick: "Cerebro · todo", sub: "Aquí nacen las ideas y se convierten en contenido. Toca cada lóbulo para recorrerlo por zonas.",
     lobes: {
-      1: { name: "Frontal", title: "Lóbulo frontal", sub: "Ideas y decisiones", items: [
-        ["Creatividad con criterio", "Parto de una idea y la llevo hasta una pieza terminada: contenido, marca o web que no sale de una plantilla y que tiene un porqué."],
-        ["Visión emprendedora", "Veo un hueco y lo convierto en proyecto. Así nacieron KREA la vall, InmobIA, CollUp y Olfato, y los saco adelante yo mismo."]] },
-      2: { name: "Parietal", title: "Lóbulo parietal", sub: "Procesar y conectar", items: [
-        ["Orden bajo presión", "Llevo varias cuentas, clientes y proyectos a la vez sin perder el hilo: priorizo, automatizo lo repetitivo y cumplo plazos."],
-        ["Pensamiento con IA", "La uso como un compañero de equipo: acelera el vídeo, el diseño y las automatizaciones, y me deja tiempo para decidir mejor."]] },
+      1: { name: "Frontal", title: "Lóbulo frontal", sub: "Ideas y dirección creativa", items: [
+        ["Creatividad con criterio", "Parto de una idea y la llevo hasta una pieza terminada: un vídeo, una campaña o un feed con personalidad, que no sale de una plantilla y que tiene un porqué."],
+        ["Dirección creativa", "Defino el tono, la estética y el hilo de una cuenta para que cada publicación se reconozca como de esa marca antes de ver el nombre."]] },
+      2: { name: "Parietal", title: "Lóbulo parietal", sub: "Organizar y analizar", items: [
+        ["Orden bajo presión", "Llevo varias cuentas a la vez con un calendario de contenido claro: grabo, edito y publico sin perder el hilo ni los plazos."],
+        ["Mirada analítica", "Leo las métricas (retención, alcance, guardados) para saber qué repetir y qué cambiar en la siguiente publicación."],
+        ["Pensamiento con IA", "La uso para acelerar la edición, crear planos imposibles de grabar y automatizar lo repetitivo, y me quedo con las decisiones creativas."]] },
       3: { name: "Temporal", title: "Lóbulo temporal", sub: "Lenguaje", items: [
-        ["Cuatro lenguas, varias culturas", "Español y catalán nativos, inglés avanzado (diez años de estudio y tres meses trabajando en EE. UU.) e italiano básico. Cambio de idioma sin perder el ritmo."]] },
+        ["Contenido en varios idiomas", "Español y catalán nativos, inglés avanzado e italiano básico: escribo guiones, subtítulos y textos de campaña en más de un idioma."]] },
       4: { name: "Occipital", title: "Lóbulo occipital", sub: "La mirada", items: [
-        ["Ojo para la imagen", "Encuadre, luz, color y ritmo: noto enseguida cuándo una pieza funciona y cuándo le falta un último ajuste."]] } } },
-  heart: { label: "Corazón", title: "Corazón", kick: "Corazón", sub: "Las personas que hay detrás de cada cuenta, cliente y vídeo.", items: [
-    ["Empatía", "Me pongo en el lugar de quien está al otro lado, ya sea cliente, creador o seguidor, para hacer contenido que de verdad le sirva."],
-    ["Escucha", "Escucho antes de proponer. Entender qué necesita cada negocio evita soluciones bonitas que no resuelven nada."]] },
+        ["Ojo para la imagen", "Encuadre, luz, color y ritmo de montaje: noto enseguida cuándo un plano funciona y cuándo le falta un último ajuste."]] } } },
+  heart: { label: "Corazón", title: "Corazón", kick: "Corazón", sub: "Las personas que hay detrás de cada cuenta y delante de cada pantalla.", items: [
+    ["Empatía con la audiencia", "Me pongo en el lugar de quien ve el vídeo: qué le hace parar, sonreír o compartir. Creo el contenido pensando en esa persona."],
+    ["Escucha", "Escucho al cliente o al creador antes de proponer, para que el contenido suene a ellos y no a una plantilla."]] },
   nose: { label: "Olfato", title: "Olfato", kick: "Nariz · bulbo olfativo", sub: "Saber hacia dónde va la conversación antes de que llegue.", items: [
     ["Olfato para tendencias", "Detecto formatos, sonidos y ganchos cuando empiezan a crecer y los uso antes de que se quemen."]] },
   voice: { label: "Voz", title: "Voz", kick: "Garganta · laringe", sub: "Cómo lo cuento y cómo cierro un acuerdo.", items: [
-    ["Negociación", "Busco acuerdos claros en los que todos ganan: con clientes, marcas, creadores y también con ayuntamientos para Olfato."],
-    ["Comunicación", "Cuento una idea en vídeo, por escrito o en directo, con una base en comunicación audiovisual y publicidad."]] }
+    ["Storytelling", "Cuento una historia en pocos segundos: gancho, desarrollo y cierre, en vídeo o por escrito."],
+    ["Comunicación y acuerdos", "Acuerdos claros con marcas y creadores, con una base en comunicación audiovisual y publicidad."]] }
 };
 const XV = `varying vec3 vN; varying vec3 vV; varying vec3 vP; attribute float lobe; varying float vL;
 void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vV = -mv.xyz; vN = normalize(normalMatrix * normal); vP = position; vL = lobe; gl_Position = projectionMatrix * mv; }`;
