@@ -467,6 +467,8 @@ const DATA = {
           "Campañas creativas montadas sobre las tendencias del momento, y anuncios en Meta Ads.",
           "Gestión de canales de creadores e influencers: hooks, estructuras de post y miniaturas que suman millones de visualizaciones orgánicas.",
           "Informes de rendimiento para decidir qué repetir y qué cambiar."],
+        paras: ["Una cuenta crece cuando la estrategia, el contenido y los números van juntos. Por eso trabajo siempre en cuatro pasos: entender el negocio y a su cliente, diseñar una línea de contenido con ganchos y formatos que se puedan repetir, producirla yo mismo (guion, rodaje y edición) y medir qué funciona para ajustar cada semana.",
+          "Lo que gana una marca conmigo es una sola persona que ve el proyecto de principio a fin: no hay que coordinar entre diseñador, editor y gestor de redes, y cada decisión se toma con el mismo criterio."],
         chips: ["Instagram", "TikTok", "YouTube", "Meta Ads", "CapCut", "Premiere Pro", "DaVinci Resolve", "DJI"],
         links: [["Instagram @krea.lavall", "https://www.instagram.com/krea.lavall/"]] },
       { name: "Crecimiento", type: "text",
@@ -516,8 +518,12 @@ const DATA = {
     pages: [
       { name: "Equipo y método", type: "text",
         lead: "Fotografía semiprofesional para marcas, producto y redes: dirección de arte, luz natural y retoque.",
+        paras: ["Una buena foto trabaja por la marca las 24 horas: una imagen de producto cuidada vende más que una descripción larga, y un feed con la misma luz y el mismo color se percibe como una marca seria, no como una cuenta más.",
+          "Mi método es sencillo: primero entiendo qué quiere transmitir el negocio, después preparo la escena y la luz, disparo con calma y selecciono solo lo que cuenta algo. El retoque busca que se vea natural, con un color coherente en todas las piezas, y lo entrego ya en los formatos que pide cada red."],
         list: ["Fotografía de producto, retrato y local para negocios.", "Retoque y color en Photoshop y Lightroom.", "Dron DJI para planos aéreos.", "Generación de escenas con IA a partir de fotos reales del producto."],
-        chips: ["Photoshop", "Lightroom", "DJI", "Gemini"] }]
+        chips: ["Photoshop", "Lightroom", "DJI", "Gemini"] },
+      { name: "Retrato", type: "gallery", count: 1, lead: "Retrato en blanco y negro: el contraste y el encuadre hacen el trabajo, sin filtros de más.",
+        items: [{ src: M + "foto-visionpro.jpg", cap: "Probando las Apple Vision Pro", sub: "Retrato en blanco y negro" }] }]
   },
   video: {
     kicker: "Filmmaking & edición", title: "Vídeo y edición", color: "#16161a",
@@ -531,6 +537,8 @@ const DATA = {
           { src: M + "sara-2.mp4", poster: M + "sara-2.jpg", cap: "Sara Morales · edición y colour grading", sub: "Formato vertical para Reels" },
           { src: M + "sara-3.mp4", poster: M + "sara-3.jpg", cap: "Sara Morales · edición y colour grading", sub: "Textos en pantalla y gradación de color" },
           { src: M + "cristalimp-video-realista.mp4", cap: "Cristalimp · spot realista", sub: "Planos con IA (Higgsfield) y montaje con textos y oferta" }],
+        paras: ["En vídeo corto, todo se decide en los dos primeros segundos: si el gancho no engancha, lo demás no se ve. Por eso cada pieza que hago empieza por la idea y el primer plano, y no por el efecto.",
+          "Mi proceso: guion y gancho, rodaje pensado para el montaje (luz natural, planos que cortan bien), edición al ritmo de la música con subtítulos y sonido cuidados, corrección de color y una versión adaptada a cada plataforma: Reels, TikTok y Shorts. El resultado es contenido que se entiende sin sonido y que se ve hasta el final."],
         list: ["CapCut a nivel experto: cortes al ritmo, diseño sonoro, subtítulos y hooks para TikTok, Reels y Shorts.",
           "Premiere Pro, DaVinci Resolve y After Effects para piezas largas, color y motion.",
           "Grabación con móvil, cámara y dron DJI.",
@@ -586,6 +594,8 @@ const DATA = {
       lead: "Me muevo bien entre culturas. En 2026 pasé tres meses trabajando en Estados Unidos y mi siguiente paso es un programa internacional que combine estudios, viajes y empresa.",
       list: ["Español y catalán: nativos.", "Inglés avanzado: 10 años de estudio y 3 meses trabajando en EE. UU. (2026).", "Italiano: básico.",
         "Monitor en YMCA Camp Fuller, Rhode Island (EE. UU.), verano 2026.", "Formación en Publicidad y Comunicación Corporativa; base en comunicación audiovisual."],
+      paras: ["Hablar idiomas no es solo traducir: es poder crear contenido, escribir a una marca o negociar en el idioma de quien está al otro lado. Puedo escribir, grabar y editar en español, catalán e inglés, y eso abre mercados que un equipo monolingüe no alcanza.",
+        "Trabajar en Estados Unidos con niños y compañeros de muchos países me enseñó a comunicar con claridad, a adaptarme rápido y a resolver sobre la marcha. Es lo que busco ahora: un programa internacional donde estudiar, viajar y seguir levantando proyectos al mismo tiempo."],
       chips: ["ES", "CA", "EN", "IT", "Rhode Island", "Boston", "NYC"] }]
   },
   moda: {
@@ -1541,26 +1551,26 @@ const XU = { uT: { value: 0 }, uK: { value: 0 } };
 const XR = { on: false, k: 0, target: 0, built: false, group: new THREE.Group(), shells: [], pick: [], mats: {}, sel: null, lobe: 0, hov: null, hovLobe: 0,
   rot: 0, camPos: new THREE.Vector3(), look: new THREE.Vector3(), camInit: false, labels: [], heart: null, lungs: [], brainMat: null };
 const XDATA = {
-  brain: { label: "Cerebro", title: "Cerebro", kick: "Cerebro · todo", sub: "Aquí nacen las ideas y se convierten en proyectos. Toca cada lóbulo para verlo por zonas.",
+  brain: { label: "Cerebro", title: "Cerebro", kick: "Cerebro · todo", sub: "Aquí nacen las ideas y se convierten en proyectos. Toca cada lóbulo para recorrerlo por zonas.",
     lobes: {
       1: { name: "Frontal", title: "Lóbulo frontal", sub: "Ideas y decisiones", items: [
-        ["Creatividad", "Ideas para contenido, marcas y webs que no salen de una plantilla."],
-        ["Visión emprendedora", "Veo un hueco y monto un proyecto: KREA la vall, InmobIA y CollUp."]] },
+        ["Creatividad con criterio", "Parto de una idea y la llevo hasta una pieza terminada: contenido, marca o web que no sale de una plantilla y que tiene un porqué."],
+        ["Visión emprendedora", "Veo un hueco y lo convierto en proyecto. Así nacieron KREA la vall, InmobIA, CollUp y Olfato, y los saco adelante yo mismo."]] },
       2: { name: "Parietal", title: "Lóbulo parietal", sub: "Procesar y conectar", items: [
-        ["Capacidad de procesamiento", "Varias cuentas, clientes y proyectos a la vez sin perder el hilo."],
-        ["Pensamiento con IA", "La IA como herramienta de trabajo: automatizaciones, vídeo y diseño."]] },
+        ["Orden bajo presión", "Llevo varias cuentas, clientes y proyectos a la vez sin perder el hilo: priorizo, automatizo lo repetitivo y cumplo plazos."],
+        ["Pensamiento con IA", "La uso como un compañero de equipo: acelera el vídeo, el diseño y las automatizaciones, y me deja tiempo para decidir mejor."]] },
       3: { name: "Temporal", title: "Lóbulo temporal", sub: "Lenguaje", items: [
-        ["Lenguas: es · ca · en · it", "Español y catalán nativos, inglés avanzado e italiano básico."]] },
+        ["Cuatro lenguas, varias culturas", "Español y catalán nativos, inglés avanzado (diez años de estudio y tres meses trabajando en EE. UU.) e italiano básico. Cambio de idioma sin perder el ritmo."]] },
       4: { name: "Occipital", title: "Lóbulo occipital", sub: "La mirada", items: [
-        ["Ojo para la imagen", "Encuadre, color y ritmo: sé cuándo una pieza se ve bien."]] } } },
+        ["Ojo para la imagen", "Encuadre, luz, color y ritmo: noto enseguida cuándo una pieza funciona y cuándo le falta un último ajuste."]] } } },
   heart: { label: "Corazón", title: "Corazón", kick: "Corazón", sub: "Las personas que hay detrás de cada cuenta, cliente y vídeo.", items: [
-    ["Empatía", "Me pongo en el lugar de quien está al otro lado: cliente, creador o seguidor."],
-    ["Comprensión", "Escucho primero y entiendo qué necesita cada negocio antes de proponer."]] },
+    ["Empatía", "Me pongo en el lugar de quien está al otro lado, ya sea cliente, creador o seguidor, para hacer contenido que de verdad le sirva."],
+    ["Escucha", "Escucho antes de proponer. Entender qué necesita cada negocio evita soluciones bonitas que no resuelven nada."]] },
   nose: { label: "Olfato", title: "Olfato", kick: "Nariz · bulbo olfativo", sub: "Saber hacia dónde va la conversación antes de que llegue.", items: [
-    ["Olfato para tendencias", "Detecto formatos y tendencias antes de que se quemen."]] },
+    ["Olfato para tendencias", "Detecto formatos, sonidos y ganchos cuando empiezan a crecer y los uso antes de que se quemen."]] },
   voice: { label: "Voz", title: "Voz", kick: "Garganta · laringe", sub: "Cómo lo cuento y cómo cierro un acuerdo.", items: [
-    ["Negociación", "Acuerdos claros con clientes, marcas y creadores."],
-    ["Comunicación", "Formación en publicidad y comunicación audiovisual."]] }
+    ["Negociación", "Busco acuerdos claros en los que todos ganan: con clientes, marcas, creadores y también con ayuntamientos para Olfato."],
+    ["Comunicación", "Cuento una idea en vídeo, por escrito o en directo, con una base en comunicación audiovisual y publicidad."]] }
 };
 const XV = `varying vec3 vN; varying vec3 vV; varying vec3 vP; attribute float lobe; varying float vL;
 void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vV = -mv.xyz; vN = normalize(normalMatrix * normal); vP = position; vL = lobe; gl_Position = projectionMatrix * mv; }`;
