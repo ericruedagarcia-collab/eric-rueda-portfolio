@@ -233,6 +233,8 @@ body.xray #tags .tag{pointer-events:none;}
 .flowgrid div{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;}
 .flowgrid b{display:block;font-size:14px;margin-bottom:4px;}
 .flowgrid span{font-size:13px;color:var(--ink-soft);line-height:1.45;}
+.shot{margin:0 0 18px;max-width:560px}.shot img{width:100%;display:block;border:1px solid var(--line);border-radius:14px}.shot figcaption{font-size:12.5px;color:var(--ink-soft);margin-top:8px}.shot figcaption b{display:block;color:var(--ink);font-weight:600}
+.p-tabs button.hid{opacity:.45;text-decoration:line-through}.tag.hid::after{content:" · oculto";font-size:.7em;opacity:.6}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:18px 0}
 .stats div{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
 .stats b{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
@@ -467,6 +469,18 @@ const DATA = {
           "Informes de rendimiento para decidir qué repetir y qué cambiar."],
         chips: ["Instagram", "TikTok", "YouTube", "Meta Ads", "CapCut", "Premiere Pro", "DaVinci Resolve", "DJI"],
         links: [["Instagram @krea.lavall", "https://www.instagram.com/krea.lavall/"]] },
+      { name: "Crecimiento", type: "text",
+        lead: "Caso Sara Morales: en mes y medio de trabajo conjunto su cuenta superó las 100.000 visualizaciones y sumó más de 10.000 seguidores.",
+        stats: [["+100 K", "visualizaciones en mes y medio"], ["+10 K", "seguidores nuevos"], ["1,5 meses", "de trabajo conjunto"], ["21,3 K", "seguidores en su perfil hoy"]],
+        img: { src: M + "sara-instagram-perfil.jpg", cap: "@saramoralesu · Sara Morales, Hair & Image Stylist", sub: "Captura de su perfil de Instagram" },
+        paras: ["Sara es estilista y asesora de imagen, de Costa Rica a Córdoba. Me encargo de su contenido en vídeo: Reels editados al ritmo, subtítulos animados, gradación de color y ganchos pensados para que la gente vea el vídeo hasta el final.",
+          "Lo que funcionó con ella es lo que aplico a los negocios locales. Un comercio de barrio no necesita millones de seguidores: necesita que la gente de su zona lo vea, lo recuerde y le escriba."],
+        list: ["Contenido constante: Reels cortos que enseñan el trabajo real, el local y a las personas detrás.",
+          "Presencia digital completa: Instagram cuidado, ficha de Google y una web propia con reservas o pedidos.",
+          "Anuncios en Meta Ads segmentados a la zona, para llegar a quien puede venir mañana.",
+          "Medir y repetir: me quedo con lo que más visualizaciones y mensajes trae, y dejo el resto."],
+        chips: ["Reels", "TikTok", "Meta Ads", "Google Business", "CapCut"],
+        links: [["Instagram @saramoralesu", "https://www.instagram.com/saramoralesu/"]] },
       { name: "Vídeos", type: "text",
         lead: "Todo mi contenido en vídeo: lo que grabo, edito y publico para marcas y creadoras. Cada pieza nace del filmmaking: idea, guion, rodaje, montaje y color.",
         vids: [{ src: "https://f9f5lznx4bycjp81.public.blob.vercel-storage.com/media/1792662187524-1009-HY8yjz73U4izwzYI2yZ8hjY5cDO2N8.MOV", cap: "Reset Tattoo Úxo · vídeo editado", sub: "Vídeo vertical de 1 min 26 s editado por mí" },
@@ -701,7 +715,7 @@ function pageHtml(p) {
   if (p.type === "text") {
     const ov = (CONTENT.sections[openId] && CONTENT.sections[openId].over || {})[openPage] || {};
     const lead = ov.lead != null ? ov.lead : p.lead, list = ov.list || p.list;
-    return `<p class="p-lead" data-ov="lead">${esc(lead)}</p>${p.stats ? `<div class="stats">${p.stats.map(([n, l]) => `<div><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>` : ""}${(p.paras || []).map(t => `<p class="p-para">${esc(t)}</p>`).join("")}${p.vids ? vidsHtml(p.vids) : ""}${list ? `<ul class="p-list">${list.map((x, i) => `<li data-ov="list" data-li="${i}">${esc(x)}</li>`).join("")}</ul>` : ""}${chipsHtml(p.chips)}${linksHtml(p.links)}`;
+    return `<p class="p-lead" data-ov="lead">${esc(lead)}</p>${p.stats ? `<div class="stats">${p.stats.map(([n, l]) => `<div><b>${esc(n)}</b><span>${esc(l)}</span></div>`).join("")}</div>` : ""}${p.img ? `<figure class="shot"><img src="${p.img.src}" alt="${esc(p.img.cap)}" loading="lazy" decoding="async"><figcaption><b>${esc(p.img.cap)}</b>${esc(p.img.sub || "")}</figcaption></figure>` : ""}${(p.paras || []).map(t => `<p class="p-para">${esc(t)}</p>`).join("")}${p.vids ? vidsHtml(p.vids) : ""}${list ? `<ul class="p-list">${list.map((x, i) => `<li data-ov="list" data-li="${i}">${esc(x)}</li>`).join("")}</ul>` : ""}${chipsHtml(p.chips)}${linksHtml(p.links)}`;
   }
   if (p.type === "custom") return "";
   if (p.type === "gallery") {
@@ -726,6 +740,8 @@ function pageHtml(p) {
 }
 /* ───── Your own content: content.json (texts, pages, blocks) + uploaded assets ───── */
 let CONTENT = { version: 1, sections: {} };
+const hidPages = id => (CONTENT.sections[id] || {}).hidden || [];
+const isHid = id => (CONTENT.hiddenItems || []).includes(id);
 const secC = id => { const c = CONTENT.sections[id] || (CONTENT.sections[id] = {}); c.extra = c.extra || {}; c.pages = c.pages || []; c.over = c.over || {}; return c; };
 const allPages = id => [...DATA[id].pages, ...((CONTENT.sections[id] || {}).pages || []).map(c => ({ name: c.name, type: "custom", custom: c }))];
 function blocksFor(id, i, create) {
@@ -751,12 +767,15 @@ function blocksHtml(list) {
 }
 function toolsHtml() {
   const custom = openPage >= DATA[openId].pages.length;
-  return `<div class="ed-tools"><button type="button" class="pri" data-ed="text">+ Texto</button><button type="button" class="pri" data-ed="media">+ Foto o vídeo</button><button type="button" class="pri" data-ed="link">+ Enlace</button><button type="button" data-ed="page">+ Página nueva</button>${custom ? `<button type="button" data-ed="rename">Renombrar página</button><button type="button" class="warn" data-ed="delpage">Borrar página</button>` : ""}</div><div id="edFormHost"></div>`;
+  return `<div class="ed-tools"><button type="button" class="pri" data-ed="text">+ Texto</button><button type="button" class="pri" data-ed="media">+ Foto o vídeo</button><button type="button" class="pri" data-ed="link">+ Enlace</button><button type="button" data-ed="page">+ Página nueva</button>${custom ? "" : `<button type="button" data-ed="hidepage">${hidPages(openId).includes(openPage) ? "Mostrar esta página" : "Ocultar esta página"}</button>`}<button type="button" data-ed="hideitem">${isHid(openId) ? "Mostrar este icono 3D" : "Ocultar este icono 3D"}</button>${custom ? `<button type="button" data-ed="rename">Renombrar página</button><button type="button" class="warn" data-ed="delpage">Borrar página</button>` : ""}</div><div id="edFormHost"></div>`;
 }
 function renderPage(dir = 0) {
   const pages = allPages(openId); if (openPage >= pages.length) openPage = 0;
+  const hp = hidPages(openId);
+  if (!EDIT && hp.includes(openPage)) openPage = pages.findIndex((_, i) => !hp.includes(i));
+  if (openPage < 0) openPage = 0;
   const p = pages[openPage];
-  pHead.querySelectorAll(".p-tabs button").forEach((b, i) => b.setAttribute("aria-selected", i === openPage));
+  pHead.querySelectorAll(".p-tabs button").forEach(b => b.setAttribute("aria-selected", +b.dataset.page === openPage));
   const list = blocksFor(openId, openPage, false);
   const empty = p.type === "custom" && !list.length ? `<p class="p-lead" style="color:var(--ink-soft)">${EDIT ? "Página vacía: añade texto, fotos, vídeos o enlaces." : "Pronto habrá contenido aquí."}</p>` : "";
   pBody.innerHTML = pageHtml(p) + empty + (list.length ? blocksHtml(list) : "") + (EDIT ? toolsHtml() : "");
@@ -770,7 +789,8 @@ function headHtml(d) {
   return `<button class="close" type="button" aria-label="Cerrar">×</button>
     <div class="p-kicker">${d.logo ? `<img src="${d.logo}" alt="">` : `<span style="width:10px;height:10px;border-radius:50%;background:${d.color};display:inline-block"></span>`}${esc(d.kicker)}</div>
     <h2 class="p-title" id="pTitle">${esc(d.title)}</h2><p class="p-role">${esc(d.role)}</p>
-    ${pages.length > 1 ? `<div class="p-tabs" role="tablist">${pages.map((p, i) => `<button type="button" role="tab" data-page="${i}">${esc(p.name)}${p.count ? `<small>${p.count}</small>` : ""}</button>`).join("")}</div>` : `<div class="p-tabs" style="padding:0"></div>`}`;
+    ${(() => { const hp = hidPages(openId), vis = pages.map((p, i) => [p, i]).filter(([, i]) => EDIT || !hp.includes(i));
+      return vis.length > 1 ? `<div class="p-tabs" role="tablist">${vis.map(([p, i]) => `<button type="button" role="tab" data-page="${i}"${hp.includes(i) ? ' class="hid"' : ""}>${esc(p.name)}${p.count ? `<small>${p.count}</small>` : ""}</button>`).join("")}</div>` : `<div class="p-tabs" style="padding:0"></div>`; })()}`;
 }
 let origin = null;
 function openPanel(id, page = 0, from) {
@@ -918,6 +938,16 @@ function editClick(e) {
     else if (k === "page") showForm("page", { mode: "page" });
     else if (k === "rename") showForm("page", { mode: "rename" }, { name: allPages(openId)[openPage].name });
     else if (k === "media") { if (!ASSETS && !EDITKEY) alertMsg("Subir archivos solo funciona con la clave de edición"); else edFile.click(); }
+    else if (k === "hidepage") {
+      const c = secC(openId); c.hidden = c.hidden || []; const j = c.hidden.indexOf(openPage);
+      if (j >= 0) c.hidden.splice(j, 1); else c.hidden.push(openPage);
+      markDirty(j >= 0 ? "Página visible · pulsa Guardar" : "Página oculta · pulsa Guardar"); pHead.innerHTML = headHtml(DATA[openId]); renderPage();
+    }
+    else if (k === "hideitem") {
+      CONTENT.hiddenItems = CONTENT.hiddenItems || []; const j = CONTENT.hiddenItems.indexOf(openId);
+      if (j >= 0) CONTENT.hiddenItems.splice(j, 1); else CONTENT.hiddenItems.push(openId);
+      markDirty(j >= 0 ? "Icono visible · pulsa Guardar" : "Icono oculto (tú lo ves tachado) · pulsa Guardar"); renderPage();
+    }
     else if (k === "delpage") {
       const c = secC(openId), i = openPage - DATA[openId].pages.length, pg = c.pages[i];
       if (pg && confirmDelete(ed, "¿Borrar la página entera?")) { (pg.blocks || []).forEach(b => b.asset && pendingDeletes.push(b.asset)); c.pages.splice(i, 1); openPage = 0; pHead.innerHTML = headHtml(DATA[openId]); markDirty(); renderPage(); }
@@ -1787,7 +1817,7 @@ const pull = new THREE.Vector3(), pullV = new THREE.Vector3(), pullT = new THREE
 const squash = { s: 0, v: 0 };
 const tmp = new THREE.Vector3(), tmp2 = new THREE.Vector3();
 function setNDC(e) { const r = canvas.getBoundingClientRect(); ndc.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1); ray.setFromCamera(ndc, camera); }
-function pick(e) { setNDC(e); const hits = ray.intersectObjects([avatar, ...items], true); return hits[0] || null; }
+function pick(e) { setNDC(e); const hits = ray.intersectObjects([avatar, ...items.filter(i => EDIT || !isHid(i.userData.id))], true); return hits[0] || null; }
 function poke(holder) { holder.userData.sqv -= 9; }
 function hit(point, amp) { U.uHitPos.value.copy(point); U.uHitTime.value = U.uTime.value; U.uHitAmp.value = amp; squash.v += amp * 5; }
 const camDir = () => camera.getWorldDirection(new THREE.Vector3()).negate();
@@ -1910,6 +1940,9 @@ function frame() {
     // cinematic entrance: each object falls from above with low gravity and settles with a soft bounce
     if (DROP.t0 == null || t < DROP.t0 + u.delay) { it.visible = false; u.dy = 13; u.vy = 0; u.tag.style.opacity = 0; continue; }
     if (!XR.on) it.visible = true;
+    const hid = isHid(u.id);
+    if (hid && !EDIT) { it.visible = false; u.tag.style.opacity = 0; u.tag.style.pointerEvents = "none"; continue; }
+    u.tag.style.pointerEvents = ""; u.tag.classList.toggle("hid", hid);
     if (!u.landed) {
       steps(dtR, h => { u.vy -= 13 * h; u.dy += u.vy * h; if (u.dy <= 0) { u.dy = 0; if (u.vy < -1.2) { u.vy = -u.vy * .34; u.bounces = (u.bounces || 0) + 1; poke(it); if (u.bounces === 1) SFX.pop(.8 + (u.delay % .5)); } else { u.vy = 0; u.landed = true; } } });
     }
